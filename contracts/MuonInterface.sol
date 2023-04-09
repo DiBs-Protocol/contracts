@@ -17,8 +17,9 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
 
     // ======== STATE VARIABLES ========
 
+    bytes32 public PROJECT_ID;
+
     address public dibs;
-    bytes32 public dibsUniversalId;
     address public validGateway;
 
     // ======== CONSTRUCTOR ========
@@ -34,6 +35,8 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
         __AccessControl_init();
         __MuonClient_init(muonAppId_, muonPublicKey_);
         __MuonInterface_init(admin_, setter_, dibs_, validGateway_);
+
+        PROJECT_ID = IDibs(dibs).PROJECT_ID();
     }
 
     function __MuonInterface_init(
@@ -44,7 +47,6 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
     ) public onlyInitializing {
         dibs = dibs_;
         validGateway = validGateway_;
-        dibsUniversalId = IDibs(dibs).universalId();
 
         _grantRole(DEFAULT_ADMIN_ROLE, admin_);
         _grantRole(SETTER, setter_);
@@ -103,7 +105,7 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
             user,
             token,
             accumulativeBalance,
-            dibsUniversalId
+            PROJECT_ID
         );
         verifyTSSAndGW(data, reqId, sign, gatewaySignature);
         IDibs(dibs).claim(user, token, amount, to, accumulativeBalance);
@@ -125,7 +127,7 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
         SchnorrSign calldata sign,
         bytes calldata gatewaySignature
     ) external {
-        bytes memory data = abi.encodePacked(round, winners, dibsUniversalId);
+        bytes memory data = abi.encodePacked(round, winners, PROJECT_ID);
         verifyTSSAndGW(data, reqId, sign, gatewaySignature);
         IDibsLottery(IDibs(dibs).dibsLottery()).setRoundWinners(round, winners);
         emit RoundWinnerSet(round, winners);
@@ -150,7 +152,7 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
             topReferrers.length,
             uint256(day),
             topReferrers,
-            dibsUniversalId
+            PROJECT_ID
         );
         verifyTSSAndGW(data, reqId, sign, gatewaySignature);
         IDibsLottery(IDibs(dibs).dibsLottery()).setTopReferrers(
@@ -183,7 +185,7 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
             dibs,
             token,
             accumulativeBalance,
-            dibsUniversalId
+            PROJECT_ID
         );
         verifyTSSAndGW(data, reqId, sign, gatewaySignature);
         IDibs(dibs).claim(dibs, token, amount, to, accumulativeBalance);
@@ -197,6 +199,7 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
     function setDibs(address dibs_) external onlyRole(SETTER) {
         emit SetDibs(dibs, dibs_);
         dibs = dibs_;
+        PROJECT_ID = IDibs(dibs).PROJECT_ID();
     }
 
     event SetMuonPublicKey(PublicKey _old, PublicKey _new);

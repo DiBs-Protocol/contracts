@@ -13,5 +13,5 @@ interface IDibs {
 
     function dibsLottery() external view returns (address);
 
-    function universalId() external view returns (bytes32);
+    function PROJECT_ID() external view returns (bytes32);
 }

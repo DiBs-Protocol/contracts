@@ -9,6 +9,8 @@ import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
 contract Dibs is AccessControlUpgradeable {
     using SafeERC20Upgradeable for IERC20Upgradeable;
 
+    bytes32 public PROJECT_ID; // keccak256(chainId + contractAddress)
+
     bytes32 public constant DIBS = keccak256("DIBS");
     bytes32 public constant SETTER = keccak256("SETTER");
 
@@ -45,6 +47,10 @@ contract Dibs is AccessControlUpgradeable {
     ) public initializer {
         __AccessControl_init();
         __Dibs_init(dibs_, admin_, setter_, dibsLotter_, wethPriceFeed_);
+
+        PROJECT_ID = keccak256(
+            abi.encodePacked(uint256(block.chainid), address(this))
+        );
     }
 
     function __Dibs_init(
