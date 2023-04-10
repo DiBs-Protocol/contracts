@@ -76,6 +76,7 @@ contract DibsLottery is AccessControlUpgradeable {
         _setupRole(DEFAULT_ADMIN_ROLE, _admin);
         _setupRole(SETTER, _setter);
 
+        dibs = _dibs;
         winnersPerRound = _winnersPerRound;
     }
 
