@@ -31,6 +31,9 @@ contract Dibs is AccessControlUpgradeable {
     address public dibsLottery;
     address public wethPriceFeed; // chainLink compatible price feed
 
+    uint32 public firstRoundStartTime;
+    uint32 public roundDuration;
+
     error CodeAlreadyExists();
     error CodeDoesNotExist();
     error ZeroValue();

@@ -14,4 +14,10 @@ interface IDibs {
     function dibsLottery() external view returns (address);
 
     function PROJECT_ID() external view returns (bytes32);
+
+    function muonInterface() external view returns (address);
+
+    function firstRoundStartTime() external view returns (uint32);
+
+    function roundDuration() external view returns (uint32);
 }

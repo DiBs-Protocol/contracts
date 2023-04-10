@@ -5,6 +5,7 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol";
+import "./interfaces/IDibs.sol";
 
 struct LeaderBoard {
     uint32 lastUpdatedDay; // day from start of the round that the leaderBoard data was last updated
@@ -18,10 +19,7 @@ contract DibsLottery is AccessControlUpgradeable {
 
     bytes32 public constant SETTER = keccak256("SETTER");
 
-    address muonInterface; // this address can set the winner
-
-    uint32 public firstRoundStartTime;
-    uint32 public roundDuration;
+    address dibs; // dibs contract
 
     uint8 public winnersPerRound; // number of winner per round
 
@@ -55,25 +53,17 @@ contract DibsLottery is AccessControlUpgradeable {
 
     // initializer
     function initialize(
-        uint32 _firstRoundStartTime,
-        uint32 _roundDuration,
+        address _dibs,
         uint8 _winnersPerRound,
         address _admin,
         address _setter
     ) public initializer {
         __AccessControl_init();
-        __DibsLottery_init(
-            _firstRoundStartTime,
-            _roundDuration,
-            _winnersPerRound,
-            _admin,
-            _setter
-        );
+        __DibsLottery_init(_dibs, _winnersPerRound, _admin, _setter);
     }
 
     function __DibsLottery_init(
-        uint32 _firstRoundStartTime,
-        uint32 _roundDuration,
+        address _dibs,
         uint8 _winnersPerRound,
         address _admin,
         address _setter
@@ -86,31 +76,34 @@ contract DibsLottery is AccessControlUpgradeable {
         _setupRole(DEFAULT_ADMIN_ROLE, _admin);
         _setupRole(SETTER, _setter);
 
-        firstRoundStartTime = _firstRoundStartTime;
-        roundDuration = _roundDuration;
         winnersPerRound = _winnersPerRound;
     }
 
     /// @notice get the current round number
     /// @return current round number
     function getActiveLotteryRound() public view returns (uint32) {
-        return uint32((block.timestamp - firstRoundStartTime) / roundDuration);
+        return
+            uint32(
+                (block.timestamp - IDibs(dibs).firstRoundStartTime()) /
+                    IDibs(dibs).roundDuration()
+            );
     }
 
     /// @notice get active day
     /// @return active day
     function getActiveDay() public view returns (uint32) {
-        return uint32((block.timestamp - firstRoundStartTime) / 1 days);
+        return
+            uint32(
+                (block.timestamp - IDibs(dibs).firstRoundStartTime()) / 1 days
+            );
     }
 
     /// @notice get the array of winners of the given round
     /// @param roundId round number
     /// @return array of winners
-    function getRoundWinners(uint32 roundId)
-        public
-        view
-        returns (address[] memory)
-    {
+    function getRoundWinners(
+        uint32 roundId
+    ) public view returns (address[] memory) {
         return roundToWinners[roundId];
     }
 
@@ -133,11 +126,9 @@ contract DibsLottery is AccessControlUpgradeable {
     /// @notice get list of tokens that user has been rewarded with and the balance of each token
     /// @param user address of the user
     /// @return list of tokens and the balance of each token
-    function getUserTokensAndBalance(address user)
-        public
-        view
-        returns (address[] memory, uint256[] memory)
-    {
+    function getUserTokensAndBalance(
+        address user
+    ) public view returns (address[] memory, uint256[] memory) {
         address[] memory tokens = userTokens[user];
         uint256[] memory balances = new uint256[](tokens.length);
 
@@ -164,11 +155,9 @@ contract DibsLottery is AccessControlUpgradeable {
     /// @notice gets the list of top referrers of the given day
     /// @param day day number, from firstRoundStartTime
     /// @return list of top referrers
-    function getTopReferrers(uint32 day)
-        public
-        view
-        returns (address[] memory)
-    {
+    function getTopReferrers(
+        uint32 day
+    ) public view returns (address[] memory) {
         return topReferrers[day];
     }
 
@@ -182,11 +171,9 @@ contract DibsLottery is AccessControlUpgradeable {
     /// @notice gets the days that the user has been in the referrer ranking (list is not sorted)
     /// @param user address of the user
     /// @return days that the user has been in the referrer ranking
-    function getWinningDays(address user)
-        public
-        view
-        returns (uint32[] memory)
-    {
+    function getWinningDays(
+        address user
+    ) public view returns (uint32[] memory) {
         return winningDays[user];
     }
 
@@ -196,20 +183,17 @@ contract DibsLottery is AccessControlUpgradeable {
     /// @dev this function is called by the muon interface
     /// @param roundId round number
     /// @param winners address of the winner
-    function setRoundWinners(uint32 roundId, address[] memory winners)
-        external
-        onlyMuonInterface
-    {
+    function setRoundWinners(
+        uint32 roundId,
+        address[] memory winners
+    ) external onlyMuonInterface {
         uint256 winnersCount = winners.length;
 
         if (winnersCount > winnersPerRound) {
             revert TooManyWinners();
         }
 
-        if (
-            block.timestamp <
-            firstRoundStartTime + (roundId + 1) * roundDuration
-        ) {
+        if (getActiveLotteryRound() <= roundId) {
             revert LotteryRoundNotOver();
         }
 
@@ -236,10 +220,10 @@ contract DibsLottery is AccessControlUpgradeable {
     /// @dev this function is called by the muon interface
     /// @param _day day number, from firstRoundStartTime
     /// @param _referrers list of top referrers
-    function setTopReferrers(uint32 _day, address[] memory _referrers)
-        external
-        onlyMuonInterface
-    {
+    function setTopReferrers(
+        uint32 _day,
+        address[] memory _referrers
+    ) external onlyMuonInterface {
         if (_day >= getActiveDay()) revert DayNotOver();
         if (topReferrers[_day].length != 0) revert TopReferrersAlreadySet();
 
@@ -277,7 +261,7 @@ contract DibsLottery is AccessControlUpgradeable {
 
     /// @notice gets the index of the LeaderBoard data that was active at the given day
     /// @param _day day number, from firstRoundStartTime
-    /// @return index of the LeaderBoard data
+    /// @return index of the LeaderBoard data: todo: return the LeaderBoard object
     function findLeaderBoardIndex(uint32 _day) public view returns (uint256) {
         uint256 _leaderBoardsCount = leaderBoards.length;
 
@@ -372,10 +356,9 @@ contract DibsLottery is AccessControlUpgradeable {
     /// @notice set reward tokens for lottery winners
     /// @dev this function is called by the setter
     /// @param _rewardToken list of reward tokens
-    function setRewardTokens(address[] memory _rewardToken)
-        external
-        onlyRole(SETTER)
-    {
+    function setRewardTokens(
+        address[] memory _rewardToken
+    ) external onlyRole(SETTER) {
         emit SetRewardToken(rewardTokens, _rewardToken);
         rewardTokens = _rewardToken;
     }
@@ -385,25 +368,11 @@ contract DibsLottery is AccessControlUpgradeable {
     /// @notice set reward amounts with respect to reward tokens for lottery winners
     /// @dev this function is called by the setter
     /// @param _rewardAmount list of reward amounts
-    function setRewardAmount(uint256[] memory _rewardAmount)
-        external
-        onlyRole(SETTER)
-    {
+    function setRewardAmount(
+        uint256[] memory _rewardAmount
+    ) external onlyRole(SETTER) {
         emit SetRewardAmount(rewardAmounts, _rewardAmount);
         rewardAmounts = _rewardAmount;
-    }
-
-    event SetMuonInterface(address _old, address _new);
-
-    /// @notice set muon interface
-    /// @dev this function is called by the setter
-    /// @param _muonInterface muon interface address
-    function setMuonInterface(address _muonInterface)
-        external
-        onlyRole(SETTER)
-    {
-        emit SetMuonInterface(muonInterface, _muonInterface);
-        muonInterface = _muonInterface;
     }
 
     event SetWinnersPerRound(uint8 _old, uint8 _new);
@@ -411,10 +380,9 @@ contract DibsLottery is AccessControlUpgradeable {
     /// @notice set number of winners per round
     /// @dev this function is called by the setter
     /// @param _winnersPerRound number of winners per round
-    function setWinnersPerRound(uint8 _winnersPerRound)
-        external
-        onlyRole(SETTER)
-    {
+    function setWinnersPerRound(
+        uint8 _winnersPerRound
+    ) external onlyRole(SETTER) {
         emit SetWinnersPerRound(winnersPerRound, _winnersPerRound);
         winnersPerRound = _winnersPerRound;
     }
@@ -455,11 +423,7 @@ contract DibsLottery is AccessControlUpgradeable {
 
     // ** =========== INTERNAL FUNCTIONS =========== **
 
-    function _deposit(
-        address _user,
-        address _token,
-        uint256 _amount
-    ) internal {
+    function _deposit(address _user, address _token, uint256 _amount) internal {
         balanceOf[_user][_token] += _amount;
 
         if (!hasToken[_user][_token]) {
@@ -481,7 +445,8 @@ contract DibsLottery is AccessControlUpgradeable {
     // ** =========== MODIFIERS =========== **
 
     modifier onlyMuonInterface() {
-        if (msg.sender != muonInterface) revert NotMuonInterface();
+        if (msg.sender != IDibs(dibs).muonInterface())
+            revert NotMuonInterface();
         _;
     }
 }
