@@ -1,10 +1,60 @@
 {
   "manifestVersion": "3.2",
-  "proxies": [],
-  "impls": {
-    "6087bf36aae583fa358c7248f7280ada634a95c9ed4f50f8439c91d742e50ca5": {
+  "admin": {
+    "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+    "txHash": "0xc984d7655a1effec6133fc1e9fccc780fa02a9ad0a256426ffc3e8944d84ee0a"
+  },
+  "proxies": [
+    {
+      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "txHash": "0xcf5e29845b68a7fa22f9f488dc0a6bee8e88b338734c26ccb6367b5fcdcc755c",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      "txHash": "0x11ad16f1f6187331cc6e9c4dd773bfba0fefbecc4e51696eb49828c866e98bb9",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      "txHash": "0x32a3a7b819309653af462cb47199302bf70c420067d312d6e6484ce34da4f925",
+      "kind": "transparent"
+    },
+    {
       "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
-      "txHash": "0x3c0533dd3f9e5be8344b88642d8da273501ad623803abf945db4f6bce6a92733",
+      "txHash": "0x694406628e4d513f3bf81d67d0f249de5f0006bfa460904f6b18f46405c87cca",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+      "txHash": "0xd397b105471cdb5303cbb7a92328e1fc3fe77b8d80c5d482c571bdd655051ec0",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+      "txHash": "0x4cca4702cd7f86b4b75b364fec571b1f315cd5ca1fb68237453ee335a49ddf73",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      "txHash": "0xccd5625bec4a4c45eb8af77a9f62b165064155570936fbf13293f9084784174b",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
+      "txHash": "0x75a2521a19ea884df9bc737fcebc60c41caf84a650449172362bf4cf7fa74232",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+      "txHash": "0xbddcf4574aaf5458e4e6203fe041d8084c5974509d1e39071a623d1cc4c5a2b3",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "66651e416a44086008f1f757e9c73a91eda64839cdb605d63ec7f850b582d7cf": {
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "txHash": "0x61e8059dbe8378a67105e71c034233f4ad60b4f4497b583466ae26b6541ec53b",
       "layout": {
         "solcVersion": "0.8.17",
         "storage": [
@@ -45,7 +95,7 @@
             "label": "_roles",
             "offset": 0,
             "slot": "101",
-            "type": "t_mapping(t_bytes32,t_struct(RoleData)386_storage)",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)34_storage)",
             "contract": "AccessControlUpgradeable",
             "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
           },
@@ -63,7 +113,7 @@
             "slot": "151",
             "type": "t_bytes32",
             "contract": "Dibs",
-            "src": "contracts/Dibs.sol:12"
+            "src": "contracts/Dibs.sol:13"
           },
           {
             "label": "muonInterface",
@@ -71,7 +121,7 @@
             "slot": "152",
             "type": "t_address",
             "contract": "Dibs",
-            "src": "contracts/Dibs.sol:17"
+            "src": "contracts/Dibs.sol:18"
           },
           {
             "label": "addressToCode",
@@ -79,7 +129,7 @@
             "slot": "153",
             "type": "t_mapping(t_address,t_bytes32)",
             "contract": "Dibs",
-            "src": "contracts/Dibs.sol:20"
+            "src": "contracts/Dibs.sol:21"
           },
           {
             "label": "codeToAddress",
@@ -87,7 +137,7 @@
             "slot": "154",
             "type": "t_mapping(t_bytes32,t_address)",
             "contract": "Dibs",
-            "src": "contracts/Dibs.sol:21"
+            "src": "contracts/Dibs.sol:22"
           },
           {
             "label": "codeToName",
@@ -95,7 +145,7 @@
             "slot": "155",
             "type": "t_mapping(t_bytes32,t_string_storage)",
             "contract": "Dibs",
-            "src": "contracts/Dibs.sol:22"
+            "src": "contracts/Dibs.sol:23"
           },
           {
             "label": "parents",
@@ -103,7 +153,7 @@
             "slot": "156",
             "type": "t_mapping(t_address,t_address)",
             "contract": "Dibs",
-            "src": "contracts/Dibs.sol:23"
+            "src": "contracts/Dibs.sol:24"
           },
           {
             "label": "claimedBalance",
@@ -111,7 +161,7 @@
             "slot": "157",
             "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
             "contract": "Dibs",
-            "src": "contracts/Dibs.sol:25"
+            "src": "contracts/Dibs.sol:26"
           },
           {
             "label": "SCALE",
@@ -119,7 +169,7 @@
             "slot": "158",
             "type": "t_uint32",
             "contract": "Dibs",
-            "src": "contracts/Dibs.sol:27"
+            "src": "contracts/Dibs.sol:28"
           },
           {
             "label": "grandparentPercentage",
@@ -127,7 +177,7 @@
             "slot": "158",
             "type": "t_uint32",
             "contract": "Dibs",
-            "src": "contracts/Dibs.sol:28"
+            "src": "contracts/Dibs.sol:29"
           },
           {
             "label": "dibsPercentage",
@@ -135,7 +185,7 @@
             "slot": "158",
             "type": "t_uint32",
             "contract": "Dibs",
-            "src": "contracts/Dibs.sol:29"
+            "src": "contracts/Dibs.sol:30"
           },
           {
             "label": "dibsLottery",
@@ -143,7 +193,7 @@
             "slot": "158",
             "type": "t_address",
             "contract": "Dibs",
-            "src": "contracts/Dibs.sol:31"
+            "src": "contracts/Dibs.sol:32"
           },
           {
             "label": "wethPriceFeed",
@@ -151,7 +201,7 @@
             "slot": "159",
             "type": "t_address",
             "contract": "Dibs",
-            "src": "contracts/Dibs.sol:32"
+            "src": "contracts/Dibs.sol:33"
           },
           {
             "label": "firstRoundStartTime",
@@ -159,7 +209,7 @@
             "slot": "159",
             "type": "t_uint32",
             "contract": "Dibs",
-            "src": "contracts/Dibs.sol:34"
+            "src": "contracts/Dibs.sol:35"
           },
           {
             "label": "roundDuration",
@@ -167,7 +217,7 @@
             "slot": "159",
             "type": "t_uint32",
             "contract": "Dibs",
-            "src": "contracts/Dibs.sol:35"
+            "src": "contracts/Dibs.sol:36"
           }
         ],
         "types": {
@@ -219,7 +269,7 @@
             "label": "mapping(bytes32 => string)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_bytes32,t_struct(RoleData)386_storage)": {
+          "t_mapping(t_bytes32,t_struct(RoleData)34_storage)": {
             "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
             "numberOfBytes": "32"
           },
@@ -227,7 +277,7 @@
             "label": "string",
             "numberOfBytes": "32"
           },
-          "t_struct(RoleData)386_storage": {
+          "t_struct(RoleData)34_storage": {
             "label": "struct AccessControlUpgradeable.RoleData",
             "members": [
               {

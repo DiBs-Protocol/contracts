@@ -5,6 +5,7 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "hardhat/console.sol";
 
 contract Dibs is AccessControlUpgradeable {
     using SafeERC20Upgradeable for IERC20Upgradeable;
@@ -45,11 +46,11 @@ contract Dibs is AccessControlUpgradeable {
         address dibs_,
         address admin_,
         address setter_,
-        address dibsLotter_,
+        address dibsLottery_,
         address wethPriceFeed_
     ) public initializer {
         __AccessControl_init();
-        __Dibs_init(dibs_, admin_, setter_, dibsLotter_, wethPriceFeed_);
+        __Dibs_init(dibs_, admin_, setter_, dibsLottery_, wethPriceFeed_);
 
         PROJECT_ID = keccak256(
             abi.encodePacked(uint256(block.chainid), address(this))
@@ -95,6 +96,14 @@ contract Dibs is AccessControlUpgradeable {
         return codeToName[addressToCode[user]];
     }
 
+    function getCode(string memory name) public pure returns (bytes32) {
+        return keccak256(abi.encodePacked(name));
+    }
+
+    function getAddress(string memory name) public view returns (address) {
+        return codeToAddress[getCode(name)];
+    }
+
     /** =========== PUBLIC FUNCTIONS =========== */
 
     event Register(
@@ -105,20 +114,17 @@ contract Dibs is AccessControlUpgradeable {
     );
 
     /// @notice register a new code
-    /// @param user address of the user
     /// @param name the name of the code
     /// @param parentCode the parent to set for the code
-    function register(
-        address user,
-        string memory name,
-        bytes32 parentCode
-    ) public {
+    function register(string memory name, bytes32 parentCode) public {
+        address user = msg.sender;
+
         // revert if code is zero
         if (bytes(name).length == 0) {
             revert ZeroValue();
         }
 
-        bytes32 code = keccak256(abi.encodePacked(name));
+        bytes32 code = getCode(name);
 
         // revert if code is already assigned to another address
         if (codeToAddress[code] != address(0)) {
