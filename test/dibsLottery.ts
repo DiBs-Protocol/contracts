@@ -391,6 +391,91 @@ describe("DibsLottery", async () => {
       ]);
     });
 
+    it("should change reward token and amount after one round winners have ben rewarded with old tokens, and all should be okey", async () => {
+      await setTimeToNextThursdayMidnight();
+      await dibsLottery
+        .connect(muonInterface)
+        .setRoundWinners(0, [user1.address, user2.address]);
+
+      await setTimeToNextThursdayMidnight();
+      await dibsLottery
+        .connect(muonInterface)
+        .setRoundWinners(1, [user1.address, user3.address]);
+
+      // change the reward token and amount for the next round
+      await dibsLottery
+        .connect(setter)
+        .setRewardTokens([lotteryToken3.address]);
+      await dibsLottery.connect(setter).setRewardAmount([lotteryRewardAmount3]);
+
+      await setTimeToNextThursdayMidnight();
+      await dibsLottery
+        .connect(muonInterface)
+        .setRoundWinners(2, [user1.address, user4.address]);
+
+      const winners = await dibsLottery.getRoundWinners(0);
+      expect(winners).to.deep.equal([user1.address, user2.address]);
+
+      const winners2 = await dibsLottery.getRoundWinners(1);
+      expect(winners2).to.deep.equal([user1.address, user3.address]);
+
+      const winners3 = await dibsLottery.getRoundWinners(2);
+      expect(winners3).to.deep.equal([user1.address, user4.address]);
+
+      // check that the lottery tokens were deposited to the winners balance
+      const user1Balances = await dibsLottery.getUserTokensAndBalance(
+        user1.address
+      );
+
+      expect(user1Balances[0]).to.deep.equal([
+        lotteryToken1.address,
+        lotteryToken2.address,
+        lotteryToken3.address,
+      ]);
+
+      expect(user1Balances[1]).to.deep.equal([
+        lotteryRewardAmount1.mul(2),
+        lotteryRewardAmount2.mul(2),
+        lotteryRewardAmount3,
+      ]);
+
+      const user2Balances = await dibsLottery.getUserTokensAndBalance(
+        user2.address
+      );
+
+      expect(user2Balances[0]).to.deep.equal([
+        lotteryToken1.address,
+        lotteryToken2.address,
+      ]);
+
+      expect(user2Balances[1]).to.deep.equal([
+        lotteryRewardAmount1,
+        lotteryRewardAmount2,
+      ]);
+
+      const user3Balances = await dibsLottery.getUserTokensAndBalance(
+        user3.address
+      );
+
+      expect(user3Balances[0]).to.deep.equal([
+        lotteryToken1.address,
+        lotteryToken2.address,
+      ]);
+
+      expect(user3Balances[1]).to.deep.equal([
+        lotteryRewardAmount1,
+        lotteryRewardAmount2,
+      ]);
+
+      const user4Balances = await dibsLottery.getUserTokensAndBalance(
+        user4.address
+      );
+
+      expect(user4Balances[0]).to.deep.equal([lotteryToken3.address]);
+
+      expect(user4Balances[1]).to.deep.equal([lotteryRewardAmount3]);
+    });
+
     it("should be able to set lottery winners if already set", async () => {
       await setTimeToNextThursdayMidnight();
 
