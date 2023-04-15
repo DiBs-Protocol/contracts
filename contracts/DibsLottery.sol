@@ -7,6 +7,8 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol";
 import "./interfaces/IDibs.sol";
 
+import "hardhat/console.sol";
+
 struct LeaderBoard {
     uint32 lastUpdatedDay; // day from start of the round that the leaderBoard data was last updated
     uint8 count; // number of users in the leaderBoard
@@ -407,7 +409,7 @@ contract DibsLottery is AccessControlUpgradeable {
         uint256[][] memory _rankReward
     ) external onlyRole(SETTER) {
         if (leaderBoards.length > 0) {
-            if (_day <= leaderBoards[leaderBoards.length - 1].lastUpdatedDay)
+            if (_day < getActiveDay())
                 revert DayMustBeGreaterThanLastUpdatedDay();
         }
         leaderBoards.push(
