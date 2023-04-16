@@ -41,6 +41,8 @@ contract DibsLottery is AccessControlUpgradeable {
     mapping(uint32 => address[]) public topReferrers; // top referrers of the day
     mapping(address => uint32[]) public winningDays; // days that the user has been in the referrer ranking
 
+    uint32 public lastRefDay;
+
     error LotteryRoundNotOver();
     error LotteryRoundAlreadyOver();
     error NotMuonInterface();
@@ -230,6 +232,8 @@ contract DibsLottery is AccessControlUpgradeable {
         if (_day >= getActiveDay()) revert DayNotOver();
         if (topReferrers[_day].length != 0) revert TopReferrersAlreadySet();
 
+        lastRefDay = _day;
+
         // find the index of the LeaderBoard data that was active at the given day
         uint256 _leaderBoardIndex = findLeaderBoardIndex(_day);
 
@@ -410,8 +414,10 @@ contract DibsLottery is AccessControlUpgradeable {
         uint256[][] memory _rankReward
     ) external onlyRole(SETTER) {
         if (leaderBoards.length > 0) {
-            if (_day <= leaderBoards[leaderBoards.length - 1].lastUpdatedDay)
-                revert DayMustBeGreaterThanLastUpdatedDay();
+            if (
+                _day <= leaderBoards[leaderBoards.length - 1].lastUpdatedDay ||
+                _day <= lastRefDay
+            ) revert DayMustBeGreaterThanLastUpdatedDay();
         }
         leaderBoards.push(
             LeaderBoard({

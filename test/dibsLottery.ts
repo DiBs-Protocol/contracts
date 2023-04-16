@@ -647,5 +647,71 @@ describe("DibsLottery", async () => {
       expect(user3Balances[0]).to.deep.equal([leaderBoardToken1.address]);
       expect(user3Balances[1]).to.deep.equal([leaderBoardRewardAmount1[1]]);
     });
+
+    it("should deposit correct rewards when before and after leader board data is updated after day 5", async () => {
+      await setTimeToNextThursdayMidnight();
+      await dibsLottery
+        .connect(muonInterface)
+        .setTopReferrers(4, [user1.address, user2.address]);
+
+      await setTimeToNextThursdayMidnight();
+      await dibsLottery
+        .connect(muonInterface)
+        .setTopReferrers(11, [user1.address, user3.address]);
+
+      await setTimeToNextThursdayMidnight();
+      await dibsLottery
+        .connect(setter)
+        .updateLeaderBoardData(
+          14,
+          2,
+          [leaderBoardToken2.address, leaderBoardToken3.address],
+          [leaderBoardRewardAmount2, leaderBoardRewardAmount3]
+        );
+
+      await setTimeToNextThursdayMidnight();
+      await dibsLottery
+        .connect(muonInterface)
+        .setTopReferrers(14, [user1.address, user3.address]);
+
+      const user1Balances = await dibsLottery.getUserTokensAndBalance(
+        user1.address
+      );
+
+      expect(user1Balances[0]).to.deep.equal([
+        leaderBoardToken1.address,
+        leaderBoardToken2.address,
+        leaderBoardToken3.address,
+      ]);
+
+      expect(user1Balances[1]).to.deep.equal([
+        leaderBoardRewardAmount1[0].add(leaderBoardRewardAmount1[0]),
+        leaderBoardRewardAmount2[0],
+        leaderBoardRewardAmount3[0],
+      ]);
+
+      const user2Balances = await dibsLottery.getUserTokensAndBalance(
+        user2.address
+      );
+
+      expect(user2Balances[0]).to.deep.equal([leaderBoardToken1.address]);
+      expect(user2Balances[1]).to.deep.equal([leaderBoardRewardAmount1[1]]);
+
+      const user3Balances = await dibsLottery.getUserTokensAndBalance(
+        user3.address
+      );
+
+      expect(user3Balances[0]).to.deep.equal([
+        leaderBoardToken1.address,
+        leaderBoardToken2.address,
+        leaderBoardToken3.address,
+      ]);
+
+      expect(user3Balances[1]).to.deep.equal([
+        leaderBoardRewardAmount1[1],
+        leaderBoardRewardAmount2[1],
+        leaderBoardRewardAmount3[1],
+      ]);
+    });
   });
 });
