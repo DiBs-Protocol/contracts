@@ -391,6 +391,7 @@ contract DibsLottery is AccessControlUpgradeable {
     }
 
     event UpdateLeaderBoardData(
+        uint8 _day,
         uint8 _count,
         address[] _rewardTokens,
         uint256[][] _rankReward
@@ -409,7 +410,7 @@ contract DibsLottery is AccessControlUpgradeable {
         uint256[][] memory _rankReward
     ) external onlyRole(SETTER) {
         if (leaderBoards.length > 0) {
-            if (_day < getActiveDay())
+            if (_day <= leaderBoards[leaderBoards.length - 1].lastUpdatedDay)
                 revert DayMustBeGreaterThanLastUpdatedDay();
         }
         leaderBoards.push(
@@ -421,7 +422,7 @@ contract DibsLottery is AccessControlUpgradeable {
             })
         );
 
-        emit UpdateLeaderBoardData(_count, _rewardTokens, _rankReward);
+        emit UpdateLeaderBoardData(_day, _count, _rewardTokens, _rankReward);
     }
 
     // ** =========== INTERNAL FUNCTIONS =========== **

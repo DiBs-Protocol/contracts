@@ -63,7 +63,7 @@ contract Dibs is AccessControlUpgradeable {
         address setter_,
         address dibsLottery_,
         address wethPriceFeed_
-    ) internal {
+    ) internal onlyInitializing {
         if (
             admin_ == address(0) ||
             dibs_ == address(0) ||

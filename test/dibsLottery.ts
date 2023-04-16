@@ -2,8 +2,6 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { deployMockContract, MockContract } from "ethereum-waffle";
 import {
   DibsLottery,
-  DibsLottery__factory,
-  Dibs__factory,
   ERC20__factory,
   IDibs__factory,
 } from "../typechain-types";
@@ -92,7 +90,7 @@ describe("DibsLottery", async () => {
       .setRewardAmount([lotteryRewardAmount1, lotteryRewardAmount2]);
 
     await dibsLottery.connect(setter).updateLeaderBoardData(
-      3, // use this data from day 0
+      3, // use this data from day 3
       leaderBoardSize, // number of winners in leader board
       [leaderBoardToken1.address, leaderBoardToken1.address], // tokens that will be rewarded to each winner
       [leaderBoardRewardAmount1, leaderBoardRewardAmount1] // amount of tokens for each position (1st, 2nd, 3rd, etc.)
@@ -494,5 +492,100 @@ describe("DibsLottery", async () => {
     });
   });
 
-  describe("LeaderBoard", async () => {});
+  describe("LeaderBoard", async () => {
+    it("should not be able to update leader board with day less than equal 3", async () => {
+      const tx = dibsLottery
+        .connect(setter)
+        .updateLeaderBoardData(
+          3,
+          2,
+          [leaderBoardToken1.address],
+          [leaderBoardRewardAmount1]
+        );
+      await expect(tx).to.be.revertedWithCustomError(
+        dibsLottery,
+        "DayMustBeGreaterThanLastUpdatedDay"
+      );
+    });
+    it("should return index 0 for days 4, 5, 6, 7, 8, 9, 10", async () => {
+      const index1 = await dibsLottery.findLeaderBoardIndex(4);
+      const index2 = await dibsLottery.findLeaderBoardIndex(5);
+      const index3 = await dibsLottery.findLeaderBoardIndex(6);
+      const index4 = await dibsLottery.findLeaderBoardIndex(7);
+      const index5 = await dibsLottery.findLeaderBoardIndex(8);
+      const index6 = await dibsLottery.findLeaderBoardIndex(9);
+      const index7 = await dibsLottery.findLeaderBoardIndex(10);
+
+      expect(index1).to.equal(0);
+      expect(index2).to.equal(0);
+      expect(index3).to.equal(0);
+      expect(index4).to.equal(0);
+      expect(index5).to.equal(0);
+      expect(index6).to.equal(0);
+      expect(index7).to.equal(0);
+    });
+
+    it("should be able to update leader board with day 4", async () => {
+      await dibsLottery
+        .connect(setter)
+        .updateLeaderBoardData(
+          4,
+          2,
+          [leaderBoardToken1.address],
+          [leaderBoardRewardAmount1]
+        );
+
+      const leaderBoard = await dibsLottery.getLatestLeaderBoard();
+      expect(leaderBoard.lastUpdatedDay).to.equal(4);
+
+      const leaderBoardTokens = leaderBoard.rewardTokens;
+
+      expect(leaderBoardTokens[0]).to.equal(leaderBoardToken1.address);
+
+      const leaderBoardAmounts = leaderBoard.rankRewardAmount;
+
+      expect(leaderBoardAmounts[0]).to.deep.equal(leaderBoardRewardAmount1);
+    });
+
+    it("should find correct leaderBoard index after update", async () => {
+      await dibsLottery
+        .connect(setter)
+        .updateLeaderBoardData(
+          10,
+          2,
+          [leaderBoardToken1.address],
+          [leaderBoardRewardAmount1]
+        );
+
+      const index1 = await dibsLottery.findLeaderBoardIndex(4);
+      const index2 = await dibsLottery.findLeaderBoardIndex(5);
+      const index3 = await dibsLottery.findLeaderBoardIndex(6);
+      const index4 = await dibsLottery.findLeaderBoardIndex(7);
+      const index5 = await dibsLottery.findLeaderBoardIndex(8);
+      const index6 = await dibsLottery.findLeaderBoardIndex(9);
+      const index7 = await dibsLottery.findLeaderBoardIndex(10);
+      const index8 = await dibsLottery.findLeaderBoardIndex(11);
+      const index9 = await dibsLottery.findLeaderBoardIndex(12);
+      const index10 = await dibsLottery.findLeaderBoardIndex(13);
+      const index11 = await dibsLottery.findLeaderBoardIndex(14);
+      const index12 = await dibsLottery.findLeaderBoardIndex(15);
+      const index13 = await dibsLottery.findLeaderBoardIndex(16);
+      const index14 = await dibsLottery.findLeaderBoardIndex(17);
+
+      expect(index1).to.equal(0);
+      expect(index2).to.equal(0);
+      expect(index3).to.equal(0);
+      expect(index4).to.equal(0);
+      expect(index5).to.equal(0);
+      expect(index6).to.equal(0);
+      expect(index7).to.equal(1);
+      expect(index8).to.equal(1);
+      expect(index9).to.equal(1);
+      expect(index10).to.equal(1);
+      expect(index11).to.equal(1);
+      expect(index12).to.equal(1);
+      expect(index13).to.equal(1);
+      expect(index14).to.equal(1);
+    });
+  });
 });

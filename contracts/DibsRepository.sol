@@ -61,7 +61,10 @@ contract DibsRepository is AccessControlUpgradeable {
         __SeedGenerator_init(VRFCoordinator_, subscriptionId_, keyHash_);
     }
 
-    function __DibsRepository_init(address admin_, address setter_) internal {
+    function __DibsRepository_init(
+        address admin_,
+        address setter_
+    ) internal onlyInitializing {
         _setupRole(DEFAULT_ADMIN_ROLE, admin_);
         _setupRole(SETTER, setter_);
     }
@@ -70,7 +73,7 @@ contract DibsRepository is AccessControlUpgradeable {
         address VRFCoordinator_,
         uint64 subscriptionId_,
         bytes32 keyHash_
-    ) internal {
+    ) internal onlyInitializing {
         seedGenerator = address(
             new DibsRandomSeedGenerator(
                 VRFCoordinator_,
