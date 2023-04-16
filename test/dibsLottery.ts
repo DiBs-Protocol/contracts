@@ -92,8 +92,8 @@ describe("DibsLottery", async () => {
     await dibsLottery.connect(setter).updateLeaderBoardData(
       3, // use this data from day 3
       leaderBoardSize, // number of winners in leader board
-      [leaderBoardToken1.address, leaderBoardToken1.address], // tokens that will be rewarded to each winner
-      [leaderBoardRewardAmount1, leaderBoardRewardAmount1] // amount of tokens for each position (1st, 2nd, 3rd, etc.)
+      [leaderBoardToken1.address], // tokens that will be rewarded to each winner
+      [leaderBoardRewardAmount1] // amount of tokens for each position (1st, 2nd, 3rd, etc.)
     );
   }
 
@@ -586,6 +586,66 @@ describe("DibsLottery", async () => {
       expect(index12).to.equal(1);
       expect(index13).to.equal(1);
       expect(index14).to.equal(1);
+    });
+    it("should fail to get leaderboard data for day 0", async () => {
+      const tx = dibsLottery.findLeaderBoardIndex(0);
+      await expect(tx).to.be.revertedWithCustomError(
+        dibsLottery,
+        "NoLeaderBoardData"
+      );
+    });
+
+    it("should deposit correct rewards for leader board day 4", async () => {
+      await setTimeToNextThursdayMidnight();
+      await dibsLottery
+        .connect(muonInterface)
+        .setTopReferrers(4, [user1.address, user2.address]);
+
+      const user1Balances = await dibsLottery.getUserTokensAndBalance(
+        user1.address
+      );
+      const user2Balances = await dibsLottery.getUserTokensAndBalance(
+        user2.address
+      );
+
+      expect(user1Balances[0]).to.deep.equal([leaderBoardToken1.address]);
+      expect(user1Balances[1]).to.deep.equal([leaderBoardRewardAmount1[0]]);
+
+      expect(user2Balances[0]).to.deep.equal([leaderBoardToken1.address]);
+      expect(user2Balances[1]).to.deep.equal([leaderBoardRewardAmount1[1]]);
+    });
+
+    it("should deposit correct rewards for multiple different and some same users and days", async () => {
+      await setTimeToNextThursdayMidnight();
+      await dibsLottery
+        .connect(muonInterface)
+        .setTopReferrers(4, [user1.address, user2.address]);
+
+      await setTimeToNextThursdayMidnight();
+      await dibsLottery
+        .connect(muonInterface)
+        .setTopReferrers(11, [user1.address, user3.address]);
+
+      const user1Balances = await dibsLottery.getUserTokensAndBalance(
+        user1.address
+      );
+      const user2Balances = await dibsLottery.getUserTokensAndBalance(
+        user2.address
+      );
+      const user3Balances = await dibsLottery.getUserTokensAndBalance(
+        user3.address
+      );
+
+      expect(user1Balances[0]).to.deep.equal([leaderBoardToken1.address]);
+      expect(user1Balances[1]).to.deep.equal([
+        leaderBoardRewardAmount1[0].add(leaderBoardRewardAmount1[0]),
+      ]);
+
+      expect(user2Balances[0]).to.deep.equal([leaderBoardToken1.address]);
+      expect(user2Balances[1]).to.deep.equal([leaderBoardRewardAmount1[1]]);
+
+      expect(user3Balances[0]).to.deep.equal([leaderBoardToken1.address]);
+      expect(user3Balances[1]).to.deep.equal([leaderBoardRewardAmount1[1]]);
     });
   });
 });
