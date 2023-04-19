@@ -3,7 +3,7 @@
 pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "./DibsRandomSeedGenerator.sol";
+import "./interfaces/IDibsSeedGenerator.sol";
 
 struct Project {
     uint256 chainId;
@@ -54,35 +54,21 @@ contract DibsRepository is AccessControlUpgradeable {
     function initialize(
         address admin_,
         address setter_,
-        address VRFCoordinator_,
-        uint64 subscriptionId_,
-        bytes32 keyHash_
+        address seedGenerator_
     ) public initializer {
         __AccessControl_init();
-        __DibsRepository_init(admin_, setter_);
-        __SeedGenerator_init(VRFCoordinator_, subscriptionId_, keyHash_);
+        __DibsRepository_init(admin_, setter_, seedGenerator_);
     }
 
     function __DibsRepository_init(
         address admin_,
-        address setter_
+        address setter_,
+        address seedGenerator_
     ) internal onlyInitializing {
         _setupRole(DEFAULT_ADMIN_ROLE, admin_);
         _setupRole(SETTER, setter_);
-    }
 
-    function __SeedGenerator_init(
-        address VRFCoordinator_,
-        uint64 subscriptionId_,
-        bytes32 keyHash_
-    ) internal onlyInitializing {
-        seedGenerator = address(
-            new DibsRandomSeedGenerator(
-                VRFCoordinator_,
-                subscriptionId_,
-                keyHash_
-            )
-        );
+        seedGenerator = seedGenerator_;
     }
 
     /// Generates a unique projectId from the chainId and dibs contract address
@@ -172,7 +158,7 @@ contract DibsRepository is AccessControlUpgradeable {
 
         bytes32 roundId = _getRoundId(projectId, round);
 
-        DibsRandomSeedGenerator(seedGenerator).requestRandomSeed(roundId); // reverts if already requested
+        IDibsSeedGenerator(seedGenerator).requestRandomSeed(roundId); // reverts if already requested
 
         emit SeedRequested(projectId, roundId, round);
     }
@@ -183,7 +169,12 @@ contract DibsRepository is AccessControlUpgradeable {
     function getSeed(
         bytes32 roundId
     ) external view returns (bool fulfilled, uint256 seed) {
-        return DibsRandomSeedGenerator(seedGenerator).getSeed(roundId);
+        return IDibsSeedGenerator(seedGenerator).getSeed(roundId);
+    }
+
+    function removeProject(bytes32 projectId) external onlyRole(SETTER) {
+        if (!projects[projectId].exists) revert InvalidProject();
+        projects[projectId].exists = false;
     }
 
     /// @notice set the seed generator
@@ -193,5 +184,6 @@ contract DibsRepository is AccessControlUpgradeable {
     ) external onlyRole(SETTER) {
         emit SetSeedGenerator(seedGenerator_, seedGenerator);
         seedGenerator = seedGenerator_;
+        IDibsSeedGenerator(seedGenerator).acceptOwnership();
     }
 }

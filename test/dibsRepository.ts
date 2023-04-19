@@ -46,16 +46,10 @@ describe("DibsRepository", async () => {
     dibsRepository = (await upgrades.deployProxy(DibsRepository, [
       admin.address,
       setter.address,
-      admin.address,
-      BigNumber.from(660), // random // random
-      "0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c",
+      seedGenerator.address,
     ])) as DibsRepository;
 
     await dibsRepository.deployed();
-
-    await dibsRepository
-      .connect(setter)
-      .setSeedGenerator(seedGenerator.address);
   });
 
   it("should add new project", async () => {
