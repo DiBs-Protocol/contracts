@@ -32,7 +32,6 @@ describe("testRegister", async () => {
     const Dibs = await ethers.getContractFactory("Dibs");
     const args = [
       admin.address,
-      admin.address,
       setter.address,
       admin.address, // for dibs lottery param, not used
       admin.address, // for weth price param, not used
@@ -49,14 +48,12 @@ describe("testRegister", async () => {
       admin.address
     );
     const hasRoleSetter = await dibs.hasRole(dibs.SETTER(), setter.address);
-    const hasRoleDibs = await dibs.hasRole(dibs.DIBS(), admin.address);
 
     expect(dibs.address).to.be.properAddress;
     expect(dibsLottery).to.be.eq(admin.address);
     expect(wethPrice).to.be.eq(admin.address);
     expect(hasRoleAdmin).to.be.true;
     expect(hasRoleSetter).to.be.true;
-    expect(hasRoleDibs).to.be.true;
 
     await assertDibsCode(dibs.address, DIBS_CODE_NAME, "");
   });
