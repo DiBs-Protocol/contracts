@@ -6,6 +6,7 @@ import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
 import "./DibsRandomSeedGenerator.sol";
 
 struct Project {
+    uint256 chainId;
     address dibs;
     string subgraphEndpoint;
     uint32 firstRoundStartTime; // should not be changed after its set
@@ -47,6 +48,7 @@ contract DibsRepository is AccessControlUpgradeable {
         string subgraphEndpoint
     );
     event SeedRequested(bytes32 projectId, bytes32 roundId, uint32 round);
+    event SetSeedGenerator(address old_, address new_);
 
     // initializer
     function initialize(
@@ -94,11 +96,23 @@ contract DibsRepository is AccessControlUpgradeable {
         return keccak256(abi.encodePacked(chainId, dibsContractAddress));
     }
 
+    /// Generates a unique roundId from the chainId, dibs contract address and round number
+    /// @param chainId Chain ID of the contract
+    /// @param dibsContractAddress Address of the dibs contract
+    /// @param round Round number
+    function getRoundId(
+        uint256 chainId,
+        address dibsContractAddress,
+        uint32 round
+    ) public pure returns (bytes32) {
+        return _getRoundId(getProjectId(chainId, dibsContractAddress), round);
+    }
+
     /// Generates a unique roundId from the projectId and round number
     /// @param projectId Unique projectId for a project
     /// @param round Round number
     /// @return Unique roundId for a project and round number
-    function getRoundId(
+    function _getRoundId(
         bytes32 projectId,
         uint32 round
     ) public pure returns (bytes32) {
@@ -123,6 +137,7 @@ contract DibsRepository is AccessControlUpgradeable {
         if (projects[projectId].exists) revert DuplicateProject();
 
         projects[projectId] = Project(
+            chainId,
             dibs,
             subgraphEndpoint,
             firstRoundStartTime,
@@ -155,7 +170,7 @@ contract DibsRepository is AccessControlUpgradeable {
         if (projects[projectId].getActiveLotteryRound() <= round)
             revert RoundNotOver();
 
-        bytes32 roundId = getRoundId(projectId, round);
+        bytes32 roundId = _getRoundId(projectId, round);
 
         DibsRandomSeedGenerator(seedGenerator).requestRandomSeed(roundId); // reverts if already requested
 
@@ -169,5 +184,14 @@ contract DibsRepository is AccessControlUpgradeable {
         bytes32 roundId
     ) external view returns (bool fulfilled, uint256 seed) {
         return DibsRandomSeedGenerator(seedGenerator).getSeed(roundId);
+    }
+
+    /// @notice set the seed generator
+    /// @param seedGenerator_ new seed generator
+    function setSeedGenerator(
+        address seedGenerator_
+    ) external onlyRole(SETTER) {
+        emit SetSeedGenerator(seedGenerator_, seedGenerator);
+        seedGenerator = seedGenerator_;
     }
 }
