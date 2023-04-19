@@ -54,6 +54,7 @@ contract DibsLottery is AccessControlUpgradeable {
     error DayNotOver();
     error TopReferrersAlreadySet();
     error DayMustBeGreaterThanLastUpdatedDay();
+    error InvalidInput();
 
     // initializer
     function initialize(
@@ -355,28 +356,50 @@ contract DibsLottery is AccessControlUpgradeable {
         }
     }
 
+    event SetLotteryRewards(address[] _rewardTokens, uint256[] _rewardAmounts);
+
+    /// @notice set reward tokens and amounts for lottery winners
+    /// @dev this function is called by the setter
+    /// @param _rewardTokens list of reward tokens
+    /// @param _rewardAmounts list of reward amounts with respect to reward tokens
+    function setLotteryRewards(
+        address[] memory _rewardTokens,
+        uint256[] memory _rewardAmounts
+    ) external onlyRole(SETTER) {
+        if (_rewardTokens.length != _rewardAmounts.length)
+            revert InvalidInput();
+
+        emit SetLotteryRewards(_rewardTokens, _rewardAmounts);
+        rewardTokens = _rewardTokens;
+        rewardAmounts = _rewardAmounts;
+    }
+
     event SetRewardToken(address[] _old, address[] _new);
 
     /// @notice set reward tokens for lottery winners
     /// @dev this function is called by the setter
-    /// @param _rewardToken list of reward tokens
+    /// @param _rewardTokens list of reward tokens
     function setRewardTokens(
-        address[] memory _rewardToken
+        address[] memory _rewardTokens
     ) external onlyRole(SETTER) {
-        emit SetRewardToken(rewardTokens, _rewardToken);
-        rewardTokens = _rewardToken;
+        if (_rewardTokens.length != rewardAmounts.length) revert InvalidInput();
+
+        emit SetRewardToken(rewardTokens, _rewardTokens);
+        rewardTokens = _rewardTokens;
     }
 
     event SetRewardAmount(uint256[] _old, uint256[] _new);
 
     /// @notice set reward amounts with respect to reward tokens for lottery winners
     /// @dev this function is called by the setter
-    /// @param _rewardAmount list of reward amounts
+    /// @param _rewardAmounts list of reward amounts
     function setRewardAmount(
-        uint256[] memory _rewardAmount
+        uint256[] memory _rewardAmounts
     ) external onlyRole(SETTER) {
-        emit SetRewardAmount(rewardAmounts, _rewardAmount);
-        rewardAmounts = _rewardAmount;
+        if (_rewardAmounts.length != rewardTokens.length) revert InvalidInput();
+
+        emit SetRewardAmount(rewardAmounts, _rewardAmounts);
+        rewardAmounts = _rewardAmounts;
     }
 
     event SetWinnersPerRound(uint8 _old, uint8 _new);

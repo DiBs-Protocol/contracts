@@ -84,10 +84,10 @@ describe("DibsLottery", async () => {
   async function setupDibsLottery() {
     await dibsLottery
       .connect(setter)
-      .setRewardTokens([lotteryToken1.address, lotteryToken2.address]);
-    await dibsLottery
-      .connect(setter)
-      .setRewardAmount([lotteryRewardAmount1, lotteryRewardAmount2]);
+      .setLotteryRewards(
+        [lotteryToken1.address, lotteryToken2.address],
+        [lotteryRewardAmount1, lotteryRewardAmount2]
+      );
 
     await dibsLottery.connect(setter).updateLeaderBoardData(
       3, // use this data from day 3
@@ -405,8 +405,7 @@ describe("DibsLottery", async () => {
       // change the reward token and amount for the next round
       await dibsLottery
         .connect(setter)
-        .setRewardTokens([lotteryToken3.address]);
-      await dibsLottery.connect(setter).setRewardAmount([lotteryRewardAmount3]);
+        .setLotteryRewards([lotteryToken3.address], [lotteryRewardAmount3]);
 
       await setTimeToNextThursdayMidnight();
       await dibsLottery
