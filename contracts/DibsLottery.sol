@@ -57,17 +57,15 @@ contract DibsLottery is AccessControlUpgradeable {
 
     // initializer
     function initialize(
-        address _dibs,
         uint8 _winnersPerRound,
         address _admin,
         address _setter
     ) public initializer {
         __AccessControl_init();
-        __DibsLottery_init(_dibs, _winnersPerRound, _admin, _setter);
+        __DibsLottery_init(_winnersPerRound, _admin, _setter);
     }
 
     function __DibsLottery_init(
-        address _dibs,
         uint8 _winnersPerRound,
         address _admin,
         address _setter
@@ -80,7 +78,6 @@ contract DibsLottery is AccessControlUpgradeable {
         _setupRole(DEFAULT_ADMIN_ROLE, _admin);
         _setupRole(SETTER, _setter);
 
-        dibs = _dibs;
         winnersPerRound = _winnersPerRound;
     }
 
@@ -429,6 +426,15 @@ contract DibsLottery is AccessControlUpgradeable {
         );
 
         emit UpdateLeaderBoardData(_day, _count, _rewardTokens, _rankReward);
+    }
+
+    event SetDibs(address _old, address _new);
+
+    /// @notice sets the dibs
+    /// @param dibs_ address of dibs contract
+    function setDibs(address dibs_) external onlyRole(SETTER) {
+        emit SetDibs(dibs, dibs_);
+        dibs = dibs_;
     }
 
     // ** =========== INTERNAL FUNCTIONS =========== **

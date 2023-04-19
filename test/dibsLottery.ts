@@ -74,7 +74,7 @@ describe("DibsLottery", async () => {
 
   async function deployDibsLottery() {
     const DibsLottery = await ethers.getContractFactory("DibsLottery");
-    const args = [dibs.address, winnersPerRound, admin.address, setter.address];
+    const args = [winnersPerRound, admin.address, setter.address];
     dibsLottery = (await upgrades.deployProxy(
       DibsLottery,
       args
@@ -95,6 +95,8 @@ describe("DibsLottery", async () => {
       [leaderBoardToken1.address], // tokens that will be rewarded to each winner
       [leaderBoardRewardAmount1] // amount of tokens for each position (1st, 2nd, 3rd, etc.)
     );
+
+    await dibsLottery.connect(setter).setDibs(dibs.address);
   }
 
   beforeEach(async () => {
