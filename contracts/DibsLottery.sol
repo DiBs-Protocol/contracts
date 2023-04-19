@@ -57,17 +57,12 @@ contract DibsLottery is AccessControlUpgradeable {
     error InvalidInput();
 
     // initializer
-    function initialize(
-        uint8 _winnersPerRound,
-        address _admin,
-        address _setter
-    ) public initializer {
+    function initialize(address _admin, address _setter) public initializer {
         __AccessControl_init();
-        __DibsLottery_init(_winnersPerRound, _admin, _setter);
+        __DibsLottery_init(_admin, _setter);
     }
 
     function __DibsLottery_init(
-        uint8 _winnersPerRound,
         address _admin,
         address _setter
     ) internal onlyInitializing {
@@ -78,8 +73,6 @@ contract DibsLottery is AccessControlUpgradeable {
 
         _setupRole(DEFAULT_ADMIN_ROLE, _admin);
         _setupRole(SETTER, _setter);
-
-        winnersPerRound = _winnersPerRound;
     }
 
     /// @notice get the current round number
