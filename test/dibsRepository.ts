@@ -72,11 +72,16 @@ describe("DibsRepository", async () => {
   });
 
   it("should add multiple projects", async () => {
+    //@ts-ignore
     await dibsRepository.connect(setter).addProject(...p1);
 
+    //@ts-ignore
     await dibsRepository.connect(setter).addProject(...p2);
 
+    //@ts-ignore
     const prjId1 = await dibsRepository.getProjectId(p1[0], p1[1]);
+
+    //@ts-ignore
     const prjId2 = await dibsRepository.getProjectId(p2[0], p2[1]);
 
     const prj1 = await dibsRepository.projects(prjId1);
@@ -99,10 +104,16 @@ describe("DibsRepository", async () => {
   });
 
   it("should be able to update subgraph endpoint after adding projects", async () => {
+    //@ts-ignore
     await dibsRepository.connect(setter).addProject(...p1);
+
+    //@ts-ignore
     await dibsRepository.connect(setter).addProject(...p2);
 
+    //@ts-ignore
     const prjId1 = await dibsRepository.getProjectId(p1[0], p1[1]);
+
+    //@ts-ignore
     const prjId2 = await dibsRepository.getProjectId(p2[0], p2[1]);
 
     await dibsRepository
@@ -117,8 +128,10 @@ describe("DibsRepository", async () => {
   });
 
   it("should be able to request random seed for project 1", async () => {
+    //@ts-ignore
     await dibsRepository.connect(setter).addProject(...p1);
 
+    //@ts-ignore
     const prjId1 = await dibsRepository.getProjectId(p1[0], p1[1]);
     const round0Id = await dibsRepository._getRoundId(prjId1, 0);
 
@@ -129,8 +142,11 @@ describe("DibsRepository", async () => {
   it("should not be able to request random seed for project 2", async () => {
     const currentTimestamp = await getCurrentTimeStamp();
     p2[3] = currentTimestamp;
+
+    //@ts-ignore
     await dibsRepository.connect(setter).addProject(...p2);
 
+    //@ts-ignore
     const prjId2 = await dibsRepository.getProjectId(p2[0], p2[1]);
     const round0Id = await dibsRepository._getRoundId(prjId2, 0);
 
@@ -140,6 +156,7 @@ describe("DibsRepository", async () => {
   });
 
   it("should not allow request random seed for non existing project", async () => {
+    //@ts-ignore
     const prjId2 = await dibsRepository.getProjectId(p2[0], p2[1]);
 
     await expect(
@@ -148,6 +165,7 @@ describe("DibsRepository", async () => {
   });
 
   it("should get seed", async () => {
+    //@ts-ignore
     const roundId = await dibsRepository.getRoundId(1, p1[1], 0);
     await seedGenerator.mock.getSeed
       .withArgs(roundId)
