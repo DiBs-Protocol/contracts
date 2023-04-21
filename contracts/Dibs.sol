@@ -46,10 +46,19 @@ contract Dibs is AccessControlUpgradeable {
         address admin_,
         address setter_,
         address dibsLottery_,
-        address wethPriceFeed_
+        address wethPriceFeed_,
+        uint32 firstRoundStartTime_,
+        uint32 roundDuration_
     ) public initializer {
         __AccessControl_init();
-        __Dibs_init(admin_, setter_, dibsLottery_, wethPriceFeed_);
+        __Dibs_init(
+            admin_,
+            setter_,
+            dibsLottery_,
+            wethPriceFeed_,
+            firstRoundStartTime_,
+            roundDuration_
+        );
 
         PROJECT_ID = keccak256(
             abi.encodePacked(uint256(block.chainid), address(this))
@@ -60,7 +69,9 @@ contract Dibs is AccessControlUpgradeable {
         address admin_,
         address setter_,
         address dibsLottery_,
-        address wethPriceFeed_
+        address wethPriceFeed_,
+        uint32 firstRoundStartTime_,
+        uint32 roundDuration_
     ) internal onlyInitializing {
         if (
             admin_ == address(0) ||
@@ -85,6 +96,9 @@ contract Dibs is AccessControlUpgradeable {
 
         dibsLottery = dibsLottery_;
         wethPriceFeed = wethPriceFeed_;
+
+        firstRoundStartTime = firstRoundStartTime_;
+        roundDuration = roundDuration_;
     }
 
     // get code name

@@ -28,6 +28,10 @@ const config: HardhatUserConfig = {
       url: "https://polygon-rpc.com",
       accounts: [process.env.ADMIN_PRIVATE_KEY!],
     },
+    arbitrumOne: {
+      url: "https://arb1.arbitrum.io/rpc",
+      accounts: [process.env.ADMIN_PRIVATE_KEY!],
+    },
   },
   etherscan: {
     apiKey: {
@@ -35,6 +39,7 @@ const config: HardhatUserConfig = {
       polygonMumbai: process.env.MATICSCAN_API_KEY!,
       polygon: process.env.MATICSCAN_API_KEY!,
       bsc: process.env.BSCSCAN_API_KEY!,
+      arbitrumOne: process.env.ARBITRUMSCAN_API_KEY!,
     },
   },
 };

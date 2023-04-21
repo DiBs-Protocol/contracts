@@ -1,8 +1,8 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { assert } from "chai";
 import { BigNumber } from "ethers";
-import { ethers, upgrades } from "hardhat";
-import { Dibs, DibsLottery } from "../typechain-types";
+import hre, { ethers, upgrades } from "hardhat";
+import { Dibs, DibsLottery, MuonInterfaceV1 } from "../typechain-types";
 
 async function deployDibsLottery(
   admin: string,
@@ -63,10 +63,19 @@ async function deployDibs(
   admin: string,
   setter: string,
   dibsLottery: string,
-  wethPriceFeed: string
+  wethPriceFeed: string,
+  firstRoundStartTime: number,
+  roundDuration: number
 ) {
   const DibsFactory = await ethers.getContractFactory("Dibs");
-  const args = [admin, setter, dibsLottery, wethPriceFeed];
+  const args = [
+    admin,
+    setter,
+    dibsLottery,
+    wethPriceFeed,
+    firstRoundStartTime,
+    roundDuration,
+  ];
   const dibs = await upgrades.deployProxy(DibsFactory, args);
   await dibs.deployed();
 
@@ -88,25 +97,15 @@ async function adjustRoles(
   admin: string,
   setter: string
 ) {
-  // grant roles
-  await dibsLottery.grantRole(await dibsLottery.DEFAULT_ADMIN_ROLE(), admin);
-
-  console.log("dibsLottery admin role granted to", admin);
-
-  await dibsLottery.grantRole(await dibsLottery.SETTER(), setter);
-
-  console.log("dibsLottery setter role granted to", setter);
-
-  await dibs.grantRole(await dibs.DEFAULT_ADMIN_ROLE(), admin);
-
-  console.log("dibs admin role granted to", admin);
-
-  await dibs.grantRole(await dibs.SETTER(), setter);
-
-  console.log("dibs setter role granted to", setter);
-
-  // renounce roles
   if (deployer.address != admin) {
+    await dibsLottery.grantRole(await dibsLottery.DEFAULT_ADMIN_ROLE(), admin);
+
+    console.log("dibsLottery admin role granted to", admin);
+
+    await dibs.grantRole(await dibs.DEFAULT_ADMIN_ROLE(), admin);
+
+    console.log("dibs admin role granted to", admin);
+
     await dibsLottery.renounceRole(
       await dibsLottery.DEFAULT_ADMIN_ROLE(),
       deployer.address
@@ -120,6 +119,14 @@ async function adjustRoles(
   }
 
   if (deployer.address != setter) {
+    await dibsLottery.grantRole(await dibsLottery.SETTER(), setter);
+
+    console.log("dibsLottery setter role granted to", setter);
+
+    await dibs.grantRole(await dibs.SETTER(), setter);
+
+    console.log("dibs setter role granted to", setter);
+
     await dibsLottery.renounceRole(
       await dibsLottery.SETTER(),
       deployer.address
@@ -136,17 +143,16 @@ async function adjustRoles(
 export async function dibsFactory(
   admin: string,
   setter: string,
+  firstRoundStartTime: number,
+  roundDuration: number,
   wethPriceFeed: string,
   lotteryWinnersCounts: number,
   lotteryRewardTokens: string[],
   lotteryRewardAmounts: BigNumber[],
   leaderBoardWinnersCount: number,
   leaderBoardRewardTokens: string[],
-  leaderBoardRewardAmounts: BigNumber[][] // [token][leaderBoard position]
+  leaderBoardRewardAmounts: BigNumber[][] // [token][leaderBoard position],
 ) {
-  // performs all the operations using a single deployer account
-  // and adjusts the roles after all is finished
-
   const [deployer] = await ethers.getSigners();
 
   // deploy and setup the dibs lottery first, since it has no dependencies
@@ -171,9 +177,38 @@ export async function dibsFactory(
     deployer.address, // admin - will be transferred to admin
     deployer.address, // setter - will be transferred to setter
     dibsLottery.address,
-    wethPriceFeed
+    wethPriceFeed,
+    firstRoundStartTime,
+    roundDuration
   );
 
   await adjustRoles(dibs, dibsLottery, deployer, admin, setter);
+
+  // verify implementations
+
+  // dibs: 0x5693d8E94A909e0e2508B0BF64711A69F88D3238
+  const dibsImplementation = await upgrades.erc1967.getImplementationAddress(
+    dibs.address
+  );
+
+  // dibs lottery: 0xEf817c2c9921EE944a40D7b01f77ce96aD87f72F
+  const dibsLotteryImplementation =
+    await upgrades.erc1967.getImplementationAddress(dibsLottery.address);
+
+  await hre.run("verify:verify", {
+    address: dibsImplementation,
+    constructorArguments: [],
+  });
+
+  await hre.run("verify:verify", {
+    address: dibsLotteryImplementation,
+    constructorArguments: [],
+  });
+
+  /*
+Dibs deployed to: 0x16D18eDE8b965109C035C481562f96D6708Ab463
+Implementation deployed to: 0xE1E592832c1858Ed7855772533404e97dDdc23Ec
+  */
+
   return { dibs, dibsLottery };
 }
