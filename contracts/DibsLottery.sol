@@ -453,6 +453,21 @@ contract DibsLottery is AccessControlUpgradeable {
         dibs = dibs_;
     }
 
+    event RecoverERC20(address _token, address _to, uint256 _amount);
+
+    /// @notice recover erc20 tokens
+    /// @param token erc20 token address
+    /// @param to recipient address
+    /// @param amount amount to be recovered
+    function recoverERC20(
+        address token,
+        address to,
+        uint256 amount
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        IERC20Upgradeable(token).safeTransfer(to, amount);
+        emit RecoverERC20(token, to, amount);
+    }
+
     // ** =========== INTERNAL FUNCTIONS =========== **
 
     function _deposit(address _user, address _token, uint256 _amount) internal {
