@@ -102,10 +102,10 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
         bytes calldata gatewaySignature
     ) external onlyUser(user) {
         bytes memory data = abi.encodePacked(
+            PROJECT_ID,
             user,
             token,
-            accumulativeBalance,
-            PROJECT_ID
+            accumulativeBalance
         );
         verifyTSSAndGW(data, reqId, sign, gatewaySignature);
         IDibs(dibs).claim(user, token, amount, to, accumulativeBalance);
@@ -127,7 +127,8 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
         SchnorrSign calldata sign,
         bytes calldata gatewaySignature
     ) external {
-        bytes memory data = abi.encodePacked(round, winners, PROJECT_ID);
+        bytes32 roundId = keccak256(abi.encodePacked(PROJECT_ID, round));
+        bytes memory data = abi.encodePacked(roundId, winners);
         verifyTSSAndGW(data, reqId, sign, gatewaySignature);
         IDibsLottery(IDibs(dibs).dibsLottery()).setRoundWinners(round, winners);
         emit RoundWinnerSet(round, winners);
@@ -149,10 +150,10 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
         bytes calldata gatewaySignature
     ) external {
         bytes memory data = abi.encodePacked(
+            PROJECT_ID,
             topReferrers.length,
             uint256(day),
-            topReferrers,
-            PROJECT_ID
+            topReferrers
         );
         verifyTSSAndGW(data, reqId, sign, gatewaySignature);
         IDibsLottery(IDibs(dibs).dibsLottery()).setTopReferrers(
@@ -182,10 +183,10 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
         bytes calldata gatewaySignature
     ) external onlyRole(DEFAULT_ADMIN_ROLE) {
         bytes memory data = abi.encodePacked(
+            PROJECT_ID,
             dibs,
             token,
-            accumulativeBalance,
-            PROJECT_ID
+            accumulativeBalance
         );
         verifyTSSAndGW(data, reqId, sign, gatewaySignature);
         IDibs(dibs).claim(dibs, token, amount, to, accumulativeBalance);
