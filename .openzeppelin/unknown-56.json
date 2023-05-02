@@ -24,6 +24,16 @@
       "address": "0x16D18eDE8b965109C035C481562f96D6708Ab463",
       "txHash": "0x4fba0ea26bf5f11ce4bbdce3580227dd55f0057de10af8eedc0691b24afc495f",
       "kind": "transparent"
+    },
+    {
+      "address": "0xE00A47C38fBBE92Ff66A0cabe7f0E392F6d54846",
+      "txHash": "0xcfc764a7db32157afe1f5c43bd5bf1e5720bd65f24b30a79967d0e1cef9b0c02",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x3fBA73Fc55dd7cb286F963793F5301E92cC07B57",
+      "txHash": "0x42a84be7cb7e0e4694cf59fa3547bcad4122084ee82f3f9519a943d3389aa652",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -1007,6 +1017,318 @@
             "numberOfBytes": "32"
           },
           "t_struct(RoleData)34_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "e264ea1ebf891563afc8a8b3bb74adee7c2e64fb3da9bec3074ecc9d3f672355": {
+      "address": "0x5C5EC7Fa4A286da0Da5886Af9ed71e3Fbc90BDc7",
+      "txHash": "0xd2bc2bdd799a2943ec868ec76fe6ea60494a9c0f27400410c388d9b7f2cbbd0d",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "_roles",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)386_storage)",
+            "contract": "AccessControlUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "AccessControlUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:259"
+          },
+          {
+            "label": "dibs",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_address",
+            "contract": "DibsLottery",
+            "src": "contracts/DibsLottery.sol:24"
+          },
+          {
+            "label": "winnersPerRound",
+            "offset": 20,
+            "slot": "151",
+            "type": "t_uint8",
+            "contract": "DibsLottery",
+            "src": "contracts/DibsLottery.sol:26"
+          },
+          {
+            "label": "roundToWinners",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_mapping(t_uint32,t_array(t_address)dyn_storage)",
+            "contract": "DibsLottery",
+            "src": "contracts/DibsLottery.sol:28"
+          },
+          {
+            "label": "roundWinnersCount",
+            "offset": 0,
+            "slot": "153",
+            "type": "t_mapping(t_uint32,t_uint256)",
+            "contract": "DibsLottery",
+            "src": "contracts/DibsLottery.sol:29"
+          },
+          {
+            "label": "roundClaimed",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_mapping(t_uint32,t_mapping(t_address,t_bool))",
+            "contract": "DibsLottery",
+            "src": "contracts/DibsLottery.sol:31"
+          },
+          {
+            "label": "rewardTokens",
+            "offset": 0,
+            "slot": "155",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "DibsLottery",
+            "src": "contracts/DibsLottery.sol:33"
+          },
+          {
+            "label": "rewardAmounts",
+            "offset": 0,
+            "slot": "156",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "DibsLottery",
+            "src": "contracts/DibsLottery.sol:34"
+          },
+          {
+            "label": "balanceOf",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+            "contract": "DibsLottery",
+            "src": "contracts/DibsLottery.sol:36"
+          },
+          {
+            "label": "userTokens",
+            "offset": 0,
+            "slot": "158",
+            "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
+            "contract": "DibsLottery",
+            "src": "contracts/DibsLottery.sol:37"
+          },
+          {
+            "label": "hasToken",
+            "offset": 0,
+            "slot": "159",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "DibsLottery",
+            "src": "contracts/DibsLottery.sol:38"
+          },
+          {
+            "label": "leaderBoards",
+            "offset": 0,
+            "slot": "160",
+            "type": "t_array(t_struct(LeaderBoard)4717_storage)dyn_storage",
+            "contract": "DibsLottery",
+            "src": "contracts/DibsLottery.sol:40"
+          },
+          {
+            "label": "topReferrers",
+            "offset": 0,
+            "slot": "161",
+            "type": "t_mapping(t_uint32,t_array(t_address)dyn_storage)",
+            "contract": "DibsLottery",
+            "src": "contracts/DibsLottery.sol:41"
+          },
+          {
+            "label": "winningDays",
+            "offset": 0,
+            "slot": "162",
+            "type": "t_mapping(t_address,t_array(t_uint32)dyn_storage)",
+            "contract": "DibsLottery",
+            "src": "contracts/DibsLottery.sol:42"
+          },
+          {
+            "label": "lastRefDay",
+            "offset": 0,
+            "slot": "163",
+            "type": "t_uint32",
+            "contract": "DibsLottery",
+            "src": "contracts/DibsLottery.sol:44"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_array(t_uint256)dyn_storage)dyn_storage": {
+            "label": "uint256[][]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_struct(LeaderBoard)4717_storage)dyn_storage": {
+            "label": "struct LeaderBoard[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint32)dyn_storage": {
+            "label": "uint32[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_array(t_address)dyn_storage)": {
+            "label": "mapping(address => address[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_array(t_uint32)dyn_storage)": {
+            "label": "mapping(address => uint32[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(address => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)386_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint32,t_array(t_address)dyn_storage)": {
+            "label": "mapping(uint32 => address[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint32,t_mapping(t_address,t_bool))": {
+            "label": "mapping(uint32 => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint32,t_uint256)": {
+            "label": "mapping(uint32 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(LeaderBoard)4717_storage": {
+            "label": "struct LeaderBoard",
+            "members": [
+              {
+                "label": "lastUpdatedDay",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "count",
+                "type": "t_uint8",
+                "offset": 4,
+                "slot": "0"
+              },
+              {
+                "label": "rewardTokens",
+                "type": "t_array(t_address)dyn_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "rankRewardAmount",
+                "type": "t_array(t_array(t_uint256)dyn_storage)dyn_storage",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
+          },
+          "t_struct(RoleData)386_storage": {
             "label": "struct AccessControlUpgradeable.RoleData",
             "members": [
               {

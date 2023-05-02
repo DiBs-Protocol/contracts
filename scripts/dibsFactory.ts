@@ -39,24 +39,29 @@ async function setupDibsLottery(
     assert(amounts.length == leaderBoardWinnersCount);
   });
 
-  await dibsLottery.setWinnersPerRound(lotteryWinnersCounts);
-  console.log("winner per round set");
+  if (lotteryWinnersCounts > 0) {
+    await dibsLottery.setWinnersPerRound(lotteryWinnersCounts);
+    console.log("winner per round set");
 
-  await dibsLottery.setLotteryRewards(
-    lotteryRewardTokens,
-    lotteryRewardAmounts
-  );
+    if (lotteryRewardTokens.length > 0) {
+      await dibsLottery.setLotteryRewards(
+        lotteryRewardTokens,
+        lotteryRewardAmounts
+      );
+      console.log("lottery rewards set");
+    }
+  }
 
-  console.log("lottery rewards set");
-
-  await dibsLottery.updateLeaderBoardData(
-    0,
-    leaderBoardWinnersCount,
-    leaderBoardRewardTokens,
-    leaderBoardRewardAmounts
-  );
-
-  console.log("leaderboard data set");
+  if (leaderBoardWinnersCount > 0) {
+    await dibsLottery.updateLeaderBoardData(
+      0,
+      leaderBoardWinnersCount,
+      leaderBoardRewardTokens,
+      leaderBoardRewardAmounts
+    );
+    console.log("leaderboard data set");
+  }
+  console.log("dibsLottery setup done");
 }
 
 async function deployDibs(
@@ -138,6 +143,8 @@ async function adjustRoles(
 
     console.log("dibs setter role renounced from", deployer.address);
   }
+
+  console.log("roles adjusted");
 }
 
 export async function dibsFactory(
@@ -182,16 +189,16 @@ export async function dibsFactory(
     roundDuration
   );
 
+  await dibsLottery.setDibs(dibs.address);
+  console.log("dibs set in dibsLottery");
+
   await adjustRoles(dibs, dibsLottery, deployer, admin, setter);
 
   // verify implementations
-
-  // dibs: 0x5693d8E94A909e0e2508B0BF64711A69F88D3238
   const dibsImplementation = await upgrades.erc1967.getImplementationAddress(
     dibs.address
   );
 
-  // dibs lottery: 0xEf817c2c9921EE944a40D7b01f77ce96aD87f72F
   const dibsLotteryImplementation =
     await upgrades.erc1967.getImplementationAddress(dibsLottery.address);
 
@@ -204,8 +211,6 @@ export async function dibsFactory(
     address: dibsLotteryImplementation,
     constructorArguments: [],
   });
-
-  // todo: set dibs
 
   return { dibs, dibsLottery };
 }

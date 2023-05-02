@@ -10,7 +10,7 @@ async function deployThen() {
   const firstRoundStartTime = 1673481600;
   const roundDuration = 604800;
 
-  const wbnbChainLink = "0x9ef1B8c0E4F7dc8bF5719Ea496883DC6401d5b2e";
+  const wbnbChainLink = "0x0567f2323251f0aab15c8dfb1967e4e8a7d42aee";
   const lotteryTokens = ["0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56"];
   const lotteryTokenAmounts = [BigNumber.from("250000000000000000000")];
   const lotteryWinnersCounts = 8;
