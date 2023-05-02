@@ -205,10 +205,7 @@ export async function dibsFactory(
     constructorArguments: [],
   });
 
-  /*
-Dibs deployed to: 0x16D18eDE8b965109C035C481562f96D6708Ab463
-Implementation deployed to: 0xE1E592832c1858Ed7855772533404e97dDdc23Ec
-  */
+  // todo: set dibs
 
   return { dibs, dibsLottery };
 }
