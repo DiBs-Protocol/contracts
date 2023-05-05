@@ -111,6 +111,10 @@ contract DibsRepository is AccessControlUpgradeable {
         return allProjects;
     }
 
+    function allProjectsLength() external view returns (uint256) {
+        return allProjects.length;
+    }
+
     /// @notice add a project - *you can only update the subgraph endpoint later*
     /// @param chainId chain id of the contract
     /// @param dibs dibs contract address
