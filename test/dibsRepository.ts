@@ -141,9 +141,11 @@ describe("DibsRepository", async () => {
     const prjId2 = await dibsRepository.getProjectId(p2[0], p2[1]);
 
     const allProjects = await dibsRepository.getAllProjects();
+    const len = await dibsRepository.allProjectsLength();
 
     expect(allProjects[0]).to.equal(prjId1);
     expect(allProjects[1]).to.equal(prjId2);
+    expect(len).eq(2);
   });
 
   it("should be able to request random seed for project 1", async () => {
