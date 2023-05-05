@@ -21,7 +21,7 @@ async function upgrade(proxyAddress: string) {
   });
 }
 
-upgrade()
+upgrade("0x1370Ff0e5CC846a95f34FE50aD90daad17022797")
   .then(() => process.exit(0))
   .catch((error) => {
     console.error(error);

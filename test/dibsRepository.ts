@@ -127,6 +127,25 @@ describe("DibsRepository", async () => {
     expect(prj2.subgraphEndpoint).to.equal(p2[2]);
   });
 
+  it("should add the registered project into allProjects array", async () => {
+    //@ts-ignore
+    await dibsRepository.connect(setter).addProject(...p1);
+
+    //@ts-ignore
+    await dibsRepository.connect(setter).addProject(...p2);
+
+    //@ts-ignore
+    const prjId1 = await dibsRepository.getProjectId(p1[0], p1[1]);
+
+    //@ts-ignore
+    const prjId2 = await dibsRepository.getProjectId(p2[0], p2[1]);
+
+    const allProjects = await dibsRepository.getAllProjects();
+
+    expect(allProjects[0]).to.equal(prjId1);
+    expect(allProjects[1]).to.equal(prjId2);
+  });
+
   it("should be able to request random seed for project 1", async () => {
     //@ts-ignore
     await dibsRepository.connect(setter).addProject(...p1);

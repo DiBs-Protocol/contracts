@@ -38,6 +38,8 @@ contract DibsRepository is AccessControlUpgradeable {
 
     bytes32 public constant SETTER = keccak256("SETTER");
 
+    bytes32[] public allProjects;
+
     error DuplicateProject();
     error InvalidProject();
     error RoundNotOver();
@@ -105,6 +107,10 @@ contract DibsRepository is AccessControlUpgradeable {
         return keccak256(abi.encodePacked(projectId, round));
     }
 
+    function getAllProjects() external view returns (bytes32[] memory) {
+        return allProjects;
+    }
+
     /// @notice add a project - *you can only update the subgraph endpoint later*
     /// @param chainId chain id of the contract
     /// @param dibs dibs contract address
@@ -130,6 +136,8 @@ contract DibsRepository is AccessControlUpgradeable {
             roundDuration,
             true
         );
+
+        allProjects.push(projectId);
 
         emit ProjectAdded(projectId, projects[projectId]);
     }
@@ -175,6 +183,15 @@ contract DibsRepository is AccessControlUpgradeable {
     function removeProject(bytes32 projectId) external onlyRole(SETTER) {
         if (!projects[projectId].exists) revert InvalidProject();
         projects[projectId].exists = false;
+    }
+
+    /// @notice this is used to add existing project ids
+    /// that have been added before the upgrade
+    /// to the allProjects array
+    /// @param projectId projectId
+    function addProjectId(bytes32 projectId) external onlyRole(SETTER) {
+        if (!projects[projectId].exists) revert InvalidProject();
+        allProjects.push(projectId);
     }
 
     /// @notice set the seed generator
