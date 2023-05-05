@@ -34,6 +34,8 @@ describe("testClaim", async () => {
       setter.address,
       admin.address, // for dibs lottery param, not used
       admin.address, // for weth price param, not used
+      0,
+      0,
     ];
 
     dibs = (await upgrades.deployProxy(Dibs, args)) as Dibs;
