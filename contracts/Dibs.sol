@@ -135,7 +135,7 @@ contract Dibs is AccessControlUpgradeable {
     /// @notice register a new code
     /// @param name the name of the code
     /// @param parentCode the parent to set for the code
-    function register(string memory name, bytes32 parentCode) public {
+    function register(string memory name, bytes32 parentCode) public virtual {
         address user = msg.sender;
 
         // revert if code is zero
