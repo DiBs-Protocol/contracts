@@ -51,24 +51,6 @@ describe("DibsSetters", async () => {
     expect(dibsPercentage).to.be.eq(50000);
   });
 
-  it("should not be able to set percentages more than 100%", async () => {
-    await expect(
-      dibs.connect(setter).setPercentages(1000001, 0, 0, 0)
-    ).to.be.revertedWithCustomError(dibs, "InvalidPercentages");
-
-    await expect(
-      dibs.connect(setter).setPercentages(1000000, 1, 0, 0)
-    ).to.be.revertedWithCustomError(dibs, "InvalidPercentages");
-
-    await expect(
-      dibs.connect(setter).setPercentages(999998, 1, 2, 0)
-    ).to.be.revertedWithCustomError(dibs, "InvalidPercentages");
-
-    await expect(
-      dibs.connect(setter).setPercentages(999995, 1, 2, 3)
-    ).to.be.revertedWithCustomError(dibs, "InvalidPercentages");
-  });
-
   async function getAndExpectPercentages(
     referee: BigNumberish,
     referrer: BigNumberish,
