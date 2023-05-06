@@ -5,7 +5,6 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "hardhat/console.sol";
 
 contract Dibs is AccessControlUpgradeable {
     using SafeERC20Upgradeable for IERC20Upgradeable;
@@ -25,9 +24,10 @@ contract Dibs is AccessControlUpgradeable {
 
     mapping(address => mapping(address => uint256)) public claimedBalance; // token => user => claimed balance
 
+    // a total of two levels of parents are allowed
     uint32 public SCALE;
-    uint32 public grandparentPercentage;
-    uint32 public dibsPercentage;
+    uint32 public grandparentPercentage; // second level parent *
+    uint32 public dibsPercentage; // dibs platform percentage *
 
     address public dibsLottery;
     address public wethPriceFeed; // chainLink compatible price feed
@@ -35,9 +35,16 @@ contract Dibs is AccessControlUpgradeable {
     uint32 public firstRoundStartTime;
     uint32 public roundDuration;
 
+    uint32 public referrerPercentage; // percentage of the reward to be given to the referrer *
+    uint32 public refereePercentage; // percentage of the reward to be given to the referee *
+
+    // * these values are in SCALE units (1e6) and should be divided by SCALE to get the actual percentage
+    // the sum of these values should be 1e6
+
     error CodeAlreadyExists();
     error CodeDoesNotExist();
     error ZeroValue();
+    error InvalidPercentages();
     error BalanceTooLow();
     error NotMuonInterface();
 
@@ -91,6 +98,8 @@ contract Dibs is AccessControlUpgradeable {
         codeToName[DIBS] = "DIBS";
 
         SCALE = 1e6;
+        referrerPercentage = 70e4;
+        refereePercentage = 0;
         grandparentPercentage = 25e4;
         dibsPercentage = 5e4;
 
@@ -195,25 +204,40 @@ contract Dibs is AccessControlUpgradeable {
     }
 
     // set grandparent and dibs percentage
-    event SetGrandparentAndDibsPercentage(
-        uint32 _oldGrandparent,
-        uint32 _newGrandparent,
-        uint32 _oldDibs,
-        uint32 _newDibs
+    event SetPercentages(
+        uint32 _referrerPercentage,
+        uint32 _refereePercentage,
+        uint32 _grandparentPercentage,
+        uint32 _dibsPercentage
     );
 
-    function setGrandparentAndDibsPercentage(
+    function setPercentages(
+        uint32 _refereePercentage,
+        uint32 _referrerPercentage,
         uint32 _grandparentPercentage,
         uint32 _dibsPercentage
     ) external onlyRole(SETTER) {
-        emit SetGrandparentAndDibsPercentage(
-            grandparentPercentage,
-            _grandparentPercentage,
-            dibsPercentage,
-            _dibsPercentage
-        );
+        if (
+            _refereePercentage +
+                _referrerPercentage +
+                _grandparentPercentage +
+                _dibsPercentage !=
+            SCALE
+        ) {
+            revert InvalidPercentages();
+        }
+
+        refereePercentage = _refereePercentage;
+        referrerPercentage = _referrerPercentage;
         grandparentPercentage = _grandparentPercentage;
         dibsPercentage = _dibsPercentage;
+
+        emit SetPercentages(
+            _refereePercentage,
+            _referrerPercentage,
+            _grandparentPercentage,
+            _dibsPercentage
+        );
     }
 
     function recoverERC20(
