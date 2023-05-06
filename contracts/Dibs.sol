@@ -26,8 +26,8 @@ contract Dibs is AccessControlUpgradeable {
 
     // a total of two levels of parents are allowed
     uint32 public SCALE;
-    uint32 public grandparentPercentage; // second level parent *
-    uint32 public dibsPercentage; // dibs platform percentage *
+    uint32 public grandparentPercentage;
+    uint32 public dibsPercentage;
 
     address public dibsLottery;
     address public wethPriceFeed; // chainLink compatible price feed
@@ -35,8 +35,8 @@ contract Dibs is AccessControlUpgradeable {
     uint32 public firstRoundStartTime;
     uint32 public roundDuration;
 
-    uint32 public referrerPercentage; // percentage of the reward to be given to the referrer *
-    uint32 public refereePercentage; // percentage of the reward to be given to the referee *
+    uint32 public referrerPercentage;
+    uint32 public refereePercentage;
 
     // * these values are in SCALE units (1e6) and should be divided by SCALE to get the actual percentage
     // the sum of these values should be 1e6
@@ -217,16 +217,6 @@ contract Dibs is AccessControlUpgradeable {
         uint32 _grandparentPercentage,
         uint32 _dibsPercentage
     ) external onlyRole(SETTER) {
-        if (
-            _refereePercentage +
-                _referrerPercentage +
-                _grandparentPercentage +
-                _dibsPercentage !=
-            SCALE
-        ) {
-            revert InvalidPercentages();
-        }
-
         refereePercentage = _refereePercentage;
         referrerPercentage = _referrerPercentage;
         grandparentPercentage = _grandparentPercentage;
