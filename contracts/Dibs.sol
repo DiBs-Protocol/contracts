@@ -44,7 +44,6 @@ contract Dibs is AccessControlUpgradeable {
     error CodeAlreadyExists();
     error CodeDoesNotExist();
     error ZeroValue();
-    error InvalidPercentages();
     error BalanceTooLow();
     error NotMuonInterface();
 
