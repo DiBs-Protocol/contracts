@@ -14,7 +14,7 @@ contract Dibs is AccessControlUpgradeable {
     bytes32 public constant DIBS = keccak256("DIBS");
     bytes32 public constant SETTER = keccak256("SETTER");
 
-    address muonInterface; // this address can withdraw tokens from this contract on behalf of a user
+    address public muonInterface; // this address can withdraw tokens from this contract on behalf of a user
 
     /** DIBS code */
     mapping(address => bytes32) public addressToCode;

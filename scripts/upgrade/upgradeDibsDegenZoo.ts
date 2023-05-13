@@ -6,6 +6,8 @@ async function upgrade(proxyAddress: string) {
 
   await dibsDegenZoo.deployed();
 
+  await dibsDegenZoo.deployTransaction.wait(1);
+
   console.log("DibsDegenZoo upgraded:", dibsDegenZoo.address);
 
   const implementationAddress = await upgrades.erc1967.getImplementationAddress(
