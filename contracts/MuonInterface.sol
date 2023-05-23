@@ -153,7 +153,11 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
     ) external {
         bytes memory data = abi.encodePacked(
             PROJECT_ID,
-            topReferrers.length,
+            uint256(
+                IDibsLottery(IDibs(dibs).dibsLottery())
+                    .getLatestLeaderBoard()
+                    .count
+            ),
             uint256(day),
             topReferrers,
             sigTimestamp
