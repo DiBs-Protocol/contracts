@@ -139,12 +139,14 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
     /// @notice sets the top referrers of a day
     /// @param day day number (calculated from lottery first round start time)
     /// @param topReferrers top referrer addresses
+    /// @param sigTimestamp signature timestamp
     /// @param reqId request id that the signature was obtained from
     /// @param sign signature of the data
     /// @param gatewaySignature signature of the data by the gateway (specific Muon node)
     function setTopReferrers(
         uint32 day,
         address[] memory topReferrers,
+        uint256 sigTimestamp,
         bytes calldata reqId,
         SchnorrSign calldata sign,
         bytes calldata gatewaySignature
@@ -153,7 +155,8 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
             PROJECT_ID,
             topReferrers.length,
             uint256(day),
-            topReferrers
+            topReferrers,
+            sigTimestamp
         );
         verifyTSSAndGW(data, reqId, sign, gatewaySignature);
         IDibsLottery(IDibs(dibs).dibsLottery()).setTopReferrers(
