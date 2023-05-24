@@ -117,22 +117,20 @@ contract DibsRepository is AccessControlUpgradeable {
 
     function getChainProjects(
         uint256 chainId
-    ) external view returns (bytes32[] memory _ids) {
+    ) external view returns (Project[] memory _projects) {
+        _projects = new Project[](allProjects.length);
+
         uint256 count = 0;
         for (uint256 i = 0; i < allProjects.length; i++) {
             if (projects[allProjects[i]].chainId == chainId) {
+                _projects[count] = projects[allProjects[i]];
                 count++;
             }
         }
 
-        _ids = new bytes32[](count);
-
-        uint256 j = 0;
-        for (uint256 i = 0; i < allProjects.length; i++) {
-            if (projects[allProjects[i]].chainId == chainId) {
-                _ids[j] = allProjects[i];
-                j++;
-            }
+        // trim
+        assembly {
+            mstore(_projects, count)
         }
     }
 

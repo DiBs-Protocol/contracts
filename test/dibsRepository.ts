@@ -155,17 +155,11 @@ describe("DibsRepository", async () => {
     //@ts-ignore
     await dibsRepository.connect(setter).addProject(...p2);
 
-    //@ts-ignore
-    const prjId1 = await dibsRepository.getProjectId(p1[0], p1[1]);
-
-    //@ts-ignore
-    const prjId2 = await dibsRepository.getProjectId(p2[0], p2[1]);
-
     const chain1Projects = await dibsRepository.getChainProjects(p1[0]);
     const chain2Projects = await dibsRepository.getChainProjects(p2[0]);
 
-    expect(chain1Projects[0]).to.equal(prjId1);
-    expect(chain2Projects[0]).to.equal(prjId2);
+    expect(chain1Projects[0].dibs).to.equal(p1[1]);
+    expect(chain2Projects[0].dibs).to.equal(p2[1]);
   });
 
   it("should be able to request random seed for project 1", async () => {
