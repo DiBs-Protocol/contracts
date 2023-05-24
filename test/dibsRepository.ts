@@ -28,7 +28,7 @@ describe("DibsRepository", async () => {
   ];
 
   let p2 = [
-    1, // chainId
+    2, // chainId
     "0x0000000000000000000000000000000000000002", // dibs
     "https//subgraph.com", // subgraphEndpoint
     0, // first round start time
@@ -140,12 +140,32 @@ describe("DibsRepository", async () => {
     //@ts-ignore
     const prjId2 = await dibsRepository.getProjectId(p2[0], p2[1]);
 
-    const allProjects = await dibsRepository.getAllProjects();
-    const len = await dibsRepository.allProjectsLength();
+    const allProjects = await dibsRepository.getAllProjectIds();
+    const len = await dibsRepository.allProjectIdsLength();
 
     expect(allProjects[0]).to.equal(prjId1);
     expect(allProjects[1]).to.equal(prjId2);
     expect(len).eq(2);
+  });
+
+  it("should return correct chain projects after adding projects", async () => {
+    //@ts-ignore
+    await dibsRepository.connect(setter).addProject(...p1);
+
+    //@ts-ignore
+    await dibsRepository.connect(setter).addProject(...p2);
+
+    //@ts-ignore
+    const prjId1 = await dibsRepository.getProjectId(p1[0], p1[1]);
+
+    //@ts-ignore
+    const prjId2 = await dibsRepository.getProjectId(p2[0], p2[1]);
+
+    const chain1Projects = await dibsRepository.getChainProjects(p1[0]);
+    const chain2Projects = await dibsRepository.getChainProjects(p2[0]);
+
+    expect(chain1Projects[0]).to.equal(prjId1);
+    expect(chain2Projects[0]).to.equal(prjId2);
   });
 
   it("should be able to request random seed for project 1", async () => {

@@ -38,7 +38,7 @@ contract DibsRepository is AccessControlUpgradeable {
 
     bytes32 public constant SETTER = keccak256("SETTER");
 
-    bytes32[] public allProjects;
+    bytes32[] public allProjectIds;
 
     error DuplicateProject();
     error InvalidProject();
@@ -107,12 +107,37 @@ contract DibsRepository is AccessControlUpgradeable {
         return keccak256(abi.encodePacked(projectId, round));
     }
 
-    function getAllProjects() external view returns (bytes32[] memory) {
-        return allProjects;
+    function getAllProjectIds() external view returns (bytes32[] memory _ids) {
+        _ids = new bytes32[](allProjectIds.length);
+
+        for (uint256 i = 0; i < allProjectIds.length; i++) {
+            _ids[i] = allProjectIds[i];
+        }
     }
 
-    function allProjectsLength() external view returns (uint256) {
-        return allProjects.length;
+    function getChainProjects(
+        uint256 chainId
+    ) external view returns (bytes32[] memory _ids) {
+        uint256 count = 0;
+        for (uint256 i = 0; i < allProjectIds.length; i++) {
+            if (projects[allProjectIds[i]].chainId == chainId) {
+                count++;
+            }
+        }
+
+        _ids = new bytes32[](count);
+
+        uint256 j = 0;
+        for (uint256 i = 0; i < allProjectIds.length; i++) {
+            if (projects[allProjectIds[i]].chainId == chainId) {
+                _ids[j] = allProjectIds[i];
+                j++;
+            }
+        }
+    }
+
+    function allProjectIdsLength() external view returns (uint256) {
+        return allProjectIds.length;
     }
 
     /// @notice add a project - *you can only update the subgraph endpoint later*
@@ -141,7 +166,7 @@ contract DibsRepository is AccessControlUpgradeable {
             true
         );
 
-        allProjects.push(projectId);
+        allProjectIds.push(projectId);
 
         emit ProjectAdded(projectId, projects[projectId]);
     }
@@ -195,7 +220,7 @@ contract DibsRepository is AccessControlUpgradeable {
     /// @param projectId projectId
     function addProjectId(bytes32 projectId) external onlyRole(SETTER) {
         if (!projects[projectId].exists) revert InvalidProject();
-        allProjects.push(projectId);
+        allProjectIds.push(projectId);
     }
 
     /// @notice set the seed generator
