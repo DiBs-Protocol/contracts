@@ -567,17 +567,17 @@
     },
     {
       "address": "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
-      "txHash": "0xe1f0efc95b182f0380181ba9cfdfc2e3abde2ec04398ca07832fabfb32e4173c",
+      "txHash": "0xa034c53375290a7eda633f374f683df3664895b3fd8248c6085e6f129903a85e",
       "kind": "transparent"
     },
     {
       "address": "0x68B1D87F95878fE05B998F19b66F4baba5De1aed",
-      "txHash": "0xda813fc98c49981c685f51c383ad8f58693b150b7a49c9bc637ae444126c7ee5",
+      "txHash": "0x82cc35bfa6c17ce4b8abada00d3bb62672db38b8d847499b5fcc736abf349a18",
       "kind": "transparent"
     },
     {
       "address": "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d",
-      "txHash": "0xf19c6d6e03a88e6fb23a2b5f046c2af6b37ce8f0794c2ad7929198b63d416315",
+      "txHash": "0x30e0b9c2ac0c4dcec61a337a92ed9368c7711baf5426287b49ae75f60cb53eb4",
       "kind": "transparent"
     }
   ],
@@ -1646,9 +1646,9 @@
         }
       }
     },
-    "454e75989662affb75e3b178beab7cab76e26a429eb9833412863bd71dc2efb4": {
+    "27fd766634a07e4c2492d727259df2481fb5018aba9bf1f49e093427cfecfd45": {
       "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-      "txHash": "0x485b79f13db443caf99f129a8444ef63895de55a736eeaf881cd7aad45ba9b45",
+      "txHash": "0x38381ee5d83fecd1337beed3cc1500f089405e6c906361b60a2c878b2823f9b5",
       "layout": {
         "solcVersion": "0.8.17",
         "storage": [
@@ -1718,7 +1718,7 @@
             "src": "contracts/DibsRepository.sol:37"
           },
           {
-            "label": "allProjectIds",
+            "label": "allProjects",
             "offset": 0,
             "slot": "153",
             "type": "t_array(t_bytes32)dyn_storage",

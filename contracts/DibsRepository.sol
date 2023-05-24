@@ -38,7 +38,7 @@ contract DibsRepository is AccessControlUpgradeable {
 
     bytes32 public constant SETTER = keccak256("SETTER");
 
-    bytes32[] public allProjectIds;
+    bytes32[] public allProjects;
 
     error DuplicateProject();
     error InvalidProject();
@@ -108,10 +108,10 @@ contract DibsRepository is AccessControlUpgradeable {
     }
 
     function getAllProjectIds() external view returns (bytes32[] memory _ids) {
-        _ids = new bytes32[](allProjectIds.length);
+        _ids = new bytes32[](allProjects.length);
 
-        for (uint256 i = 0; i < allProjectIds.length; i++) {
-            _ids[i] = allProjectIds[i];
+        for (uint256 i = 0; i < allProjects.length; i++) {
+            _ids[i] = allProjects[i];
         }
     }
 
@@ -119,8 +119,8 @@ contract DibsRepository is AccessControlUpgradeable {
         uint256 chainId
     ) external view returns (bytes32[] memory _ids) {
         uint256 count = 0;
-        for (uint256 i = 0; i < allProjectIds.length; i++) {
-            if (projects[allProjectIds[i]].chainId == chainId) {
+        for (uint256 i = 0; i < allProjects.length; i++) {
+            if (projects[allProjects[i]].chainId == chainId) {
                 count++;
             }
         }
@@ -128,16 +128,16 @@ contract DibsRepository is AccessControlUpgradeable {
         _ids = new bytes32[](count);
 
         uint256 j = 0;
-        for (uint256 i = 0; i < allProjectIds.length; i++) {
-            if (projects[allProjectIds[i]].chainId == chainId) {
-                _ids[j] = allProjectIds[i];
+        for (uint256 i = 0; i < allProjects.length; i++) {
+            if (projects[allProjects[i]].chainId == chainId) {
+                _ids[j] = allProjects[i];
                 j++;
             }
         }
     }
 
     function allProjectIdsLength() external view returns (uint256) {
-        return allProjectIds.length;
+        return allProjects.length;
     }
 
     /// @notice add a project - *you can only update the subgraph endpoint later*
@@ -166,7 +166,7 @@ contract DibsRepository is AccessControlUpgradeable {
             true
         );
 
-        allProjectIds.push(projectId);
+        allProjects.push(projectId);
 
         emit ProjectAdded(projectId, projects[projectId]);
     }
@@ -220,7 +220,7 @@ contract DibsRepository is AccessControlUpgradeable {
     /// @param projectId projectId
     function addProjectId(bytes32 projectId) external onlyRole(SETTER) {
         if (!projects[projectId].exists) revert InvalidProject();
-        allProjectIds.push(projectId);
+        allProjects.push(projectId);
     }
 
     /// @notice set the seed generator

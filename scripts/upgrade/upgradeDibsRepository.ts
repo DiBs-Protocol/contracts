@@ -6,6 +6,11 @@ async function upgrade(proxyAddress: string) {
     proxyAddress,
     DibsRepository
   );
+
+  await dibsRepository.deployed();
+
+  await dibsRepository.deployTransaction.wait(1);
+
   console.log("DibsRepository upgraded:", dibsRepository.address);
 
   const implementationAddress = await upgrades.erc1967.getImplementationAddress(
