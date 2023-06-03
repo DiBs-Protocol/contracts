@@ -716,4 +716,17 @@ describe("DibsLottery", async () => {
       ]);
     });
   });
+
+  describe("blacklist", async () => {
+    it("should not be able to call claim if blacklisted", async () => {
+      await dibs.mock.blacklisted.withArgs(user1.address).returns(true);
+
+      const tx = dibsLottery.connect(user1).claimReward(user1.address);
+
+      await expect(tx).to.be.revertedWithCustomError(
+        dibsLottery,
+        "UserBlacklisted"
+      );
+    });
+  });
 });

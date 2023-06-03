@@ -20,4 +20,6 @@ interface IDibs {
     function firstRoundStartTime() external view returns (uint32);
 
     function roundDuration() external view returns (uint32);
+
+    function blacklisted(address) external view returns (bool);
 }

@@ -55,6 +55,7 @@ contract DibsLottery is AccessControlUpgradeable {
     error TopReferrersAlreadySet();
     error DayMustBeGreaterThanLastUpdatedDay();
     error InvalidInput();
+    error UserBlacklisted();
 
     // initializer
     function initialize(address _admin, address _setter) public initializer {
@@ -310,7 +311,7 @@ contract DibsLottery is AccessControlUpgradeable {
     /// @notice claim reward
     /// @dev this function is called by the winner
     /// @param to address to send the reward to
-    function claimReward(address to) external {
+    function claimReward(address to) external onlyNotBlacklisted {
         (
             address[] memory _tokens,
             uint256[] memory _amounts
@@ -494,6 +495,11 @@ contract DibsLottery is AccessControlUpgradeable {
     modifier onlyMuonInterface() {
         if (msg.sender != IDibs(dibs).muonInterface())
             revert NotMuonInterface();
+        _;
+    }
+
+    modifier onlyNotBlacklisted() {
+        if (IDibs(dibs).blacklisted(msg.sender)) revert UserBlacklisted();
         _;
     }
 }
