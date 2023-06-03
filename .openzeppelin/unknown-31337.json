@@ -1,8 +1,8 @@
 {
   "manifestVersion": "3.2",
   "admin": {
-    "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
-    "txHash": "0xbb427ec64e3c64dc08796b03e782bada642fd57623c54136c22ec025fbc0611a"
+    "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+    "txHash": "0x96fa6b672f44609f0c75e0055d1fd033a82aa7f4d89180550b5f629cbee8350a"
   },
   "proxies": [
     {
@@ -13,11 +13,6 @@
     {
       "address": "0x49fd2BE640DB2910c2fAb69bB8531Ab6E76127ff",
       "txHash": "0x6eb3532b0b415f4d349890589a38876516f642a50f9a9f35db89bf1d123baa42",
-      "kind": "transparent"
-    },
-    {
-      "address": "0x86A2EE8FAf9A840F7a2c64CA3d51209F9A02081D",
-      "txHash": "0x2b2588200cb2ba8b88e1bb86c22bcfdcacf0ae1ef332dfe0a036679366d2be84",
       "kind": "transparent"
     },
     {
@@ -51,11 +46,6 @@
       "kind": "transparent"
     },
     {
-      "address": "0xBEc49fA140aCaA83533fB00A2BB19bDdd0290f25",
-      "txHash": "0x861c400cef75f7dc77c345985b5888dfd38cdeee44495eccf5c83fbea9a60863",
-      "kind": "transparent"
-    },
-    {
       "address": "0xD84379CEae14AA33C123Af12424A37803F885889",
       "txHash": "0xaf7f7db49856780b71ddc65fffdd9a50a15949c18ebe8648b158dda19032920d",
       "kind": "transparent"
@@ -78,11 +68,6 @@
     {
       "address": "0xC9a43158891282A2B1475592D5719c001986Aaec",
       "txHash": "0xceee5e38f81726232457a213b5b8bdce5346bba087db9d7ad484066c023a6ec7",
-      "kind": "transparent"
-    },
-    {
-      "address": "0x1c85638e118b37167e9298c2268758e058DdfDA0",
-      "txHash": "0x0ebb968469f4bff5174784392091b2b766826b70b171d2e2a307c729a2d53102",
       "kind": "transparent"
     },
     {
@@ -136,11 +121,6 @@
       "kind": "transparent"
     },
     {
-      "address": "0x1613beB3B2C4f22Ee086B2b38C1476A3cE7f78E8",
-      "txHash": "0x1d24a6b01c75c1f90b7a7b5fa7a875ec1bd8da64cb53f4d016ed36edac71dfd1",
-      "kind": "transparent"
-    },
-    {
       "address": "0x5eb3Bc0a489C5A8288765d2336659EbCA68FCd00",
       "txHash": "0x8e91b2e02f3880357992025f166743817bedc433b3d6b14bc9d7c03e0d94975a",
       "kind": "transparent"
@@ -148,11 +128,6 @@
     {
       "address": "0x7bc06c482DEAd17c0e297aFbC32f6e63d3846650",
       "txHash": "0x2eb7c6969a021a415d3ef0bb59668fcd912f7ffaac2af421890e5d633e4e8ebf",
-      "kind": "transparent"
-    },
-    {
-      "address": "0x04C89607413713Ec9775E14b954286519d836FEf",
-      "txHash": "0x350d1c44a7f2978413a18780ed65c2e5a71606a30598666887fe748aa9a23aba",
       "kind": "transparent"
     },
     {
@@ -306,11 +281,6 @@
       "kind": "transparent"
     },
     {
-      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
-      "txHash": "0x78ec3c7e5a0a797adee156d2a61427cea4efe110acc632aa019abf50357f78d4",
-      "kind": "transparent"
-    },
-    {
       "address": "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c",
       "txHash": "0x080fcbb622a691a685e1fd74bcf993e86e741ffd95188efea4e45f81f1b618f7",
       "kind": "transparent"
@@ -333,11 +303,6 @@
     {
       "address": "0x9d4454B023096f34B160D6B654540c56A1F81688",
       "txHash": "0x2e4a34384789e894acaa788e7de851e09b1594c950bca2f414791031af22909b",
-      "kind": "transparent"
-    },
-    {
-      "address": "0x1429859428C0aBc9C2C47C8Ee9FBaf82cFA0F20f",
-      "txHash": "0x116ebe9f7115033179c41ced3345513e83fdd5129e2e93df480a76b3d9ca3ceb",
       "kind": "transparent"
     },
     {
@@ -578,6 +543,141 @@
     {
       "address": "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d",
       "txHash": "0x20ebab374be67d285f41d144b2edfb6441bfb3ffa06727bb28245f31e9687b2f",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xc351628EB244ec633d5f21fBD6621e1a683B1181",
+      "txHash": "0x3d40398b9e34f32e1e6651f54a5a5967076cc9ab12ff682b658f2ded0161b6e7",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x36b58F5C1969B7b6591D752ea6F5486D069010AB",
+      "txHash": "0x0536ded066571308d9e27bd9948c406c3529d25e24dec79dbd02b1883d40a9a4",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x1613beB3B2C4f22Ee086B2b38C1476A3cE7f78E8",
+      "txHash": "0x3ea061e04238cfdc861fd1fd54ebda548cbc2b14bdba25c301428befca4f918e",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x99bbA657f2BbC93c02D617f8bA121cB8Fc104Acf",
+      "txHash": "0x3094102a724bd24ff3c7ba3c1feac34ca0f4d8dc2d98c905481ec53b6b375566",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x4c5859f0F772848b2D91F1D83E2Fe57935348029",
+      "txHash": "0xdf59c1f2b67047f3de662cad7ff17139f736b4b37e99c2fa389c5ac6899106c1",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x7969c5eD335650692Bc04293B07F5BF2e7A673C0",
+      "txHash": "0xfc6c5b91e8c41c86d8c3e503a638791ea01420a53aaaabe0be6a0bc3d7f35bed",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x5081a39b8A5f0E35a8D959395a630b68B74Dd30f",
+      "txHash": "0x0d180942af38a61f7e5e34e44fa99c1d00942ee9a351e87ef03f8fb494266825",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xBEc49fA140aCaA83533fB00A2BB19bDdd0290f25",
+      "txHash": "0x16bcb38a301afa2881e6dfa167ba0483e82a07a43c165ce2cc960cd0c6ba0c39",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x4826533B4897376654Bb4d4AD88B7faFD0C98528",
+      "txHash": "0x824b26447cf2b5c49f1621dd721e656990f936e06bbc150245356ccbff6054ad",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x809d550fca64d94Bd9F66E60752A544199cfAC3D",
+      "txHash": "0x1c9bdccaf5e7b20eae332fca7bee36c2b4f573ee31afb606bb4fcd0b6be3a295",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x2bdCC0de6bE1f7D2ee689a0342D76F52E8EFABa3",
+      "txHash": "0xa389ec8341aea6e37892ef676f85b8b001aae7933223d9c9e6917883a9a2cb9f",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xB0D4afd8879eD9F52b28595d31B441D079B2Ca07",
+      "txHash": "0x30efecb58ba42f3917d7041d48766110c3a28cb15f404ece608dc6d29c97aa6c",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x2E2Ed0Cfd3AD2f1d34481277b3204d807Ca2F8c2",
+      "txHash": "0x910f20ddc68105c7375a629576b6cf914a3fdc77baed3f9224a29fda38ea0729",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x1c85638e118b37167e9298c2268758e058DdfDA0",
+      "txHash": "0xa29b0943901051b6e88c8d611b22763019e0a4282ac08515d4a5b4e740eedb16",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "txHash": "0x39e330bc28120f16f22786066896d2f0e4bea8c2866cd74e545816b783f72a0b",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      "txHash": "0xd55ecadeb11470e6ca6314bb6169ef4301205deb96ae9e8baa3ee341fdc9b8b2",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x0B306BF915C4d645ff596e518fAf3F9669b97016",
+      "txHash": "0x10cfc2459336b003e1320757846b6315c2c04994b63cf71bd70948865f1332c7",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x59b670e9fA9D0A427751Af201D676719a970857b",
+      "txHash": "0x30a153294aaf66ed874162e1dbd3958155e755d4d185a7ac955bafe5dc7989c7",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xc5a5C42992dECbae36851359345FE25997F5C42d",
+      "txHash": "0x8c2e667f58259ebd672efab80830b5f00c1bab577d398107a1edc350f55a4a05",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xa82fF9aFd8f496c3d6ac40E2a0F282E47488CFc9",
+      "txHash": "0x36a345fda9bc7cd4c56741109f925f7aca4fdce0fd8c7128350e202f675f2284",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x70e0bA845a1A0F2DA3359C97E0285013525FFC49",
+      "txHash": "0x976d58f6141f1d5294e370b7713a7f3d9894105cddaa08f72a76cbb82b4aeec5",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x36C02dA8a0983159322a80FFE9F24b1acfF8B570",
+      "txHash": "0xbbb3075532776f58d65f5950d9e254808235c2edde835f3863a30ad0beb461c2",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x82e01223d51Eb87e16A03E24687EDF0F294da6f1",
+      "txHash": "0xd96e99799c8dbd66e62b4ae088b704ea656ad4d250a519ae0ae88683af595bab",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x1429859428C0aBc9C2C47C8Ee9FBaf82cFA0F20f",
+      "txHash": "0x60cce94628efb8a3aaa81eb51ac65c4b3574aab5b1a83de538e45d14e10d16fd",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x04C89607413713Ec9775E14b954286519d836FEf",
+      "txHash": "0x8397823ba076fd7e6a927a05e7ebae0271147de9aa50c5af7e7a48b0da9cab75",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x0355B7B8cb128fA5692729Ab3AAa199C1753f726",
+      "txHash": "0xe9dd38e4633d06d064f9c0271c57754376b409437e37577a04099f91610431db",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x86A2EE8FAf9A840F7a2c64CA3d51209F9A02081D",
+      "txHash": "0x2d52c35ebb5714a561628a6432dcb0784aa047bfcb0a8f64a1fb045f928614d2",
       "kind": "transparent"
     }
   ],
@@ -860,280 +960,6 @@
               }
             ],
             "numberOfBytes": "96"
-          },
-          "t_struct(RoleData)34_storage": {
-            "label": "struct AccessControlUpgradeable.RoleData",
-            "members": [
-              {
-                "label": "members",
-                "type": "t_mapping(t_address,t_bool)",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "adminRole",
-                "type": "t_bytes32",
-                "offset": 0,
-                "slot": "1"
-              }
-            ],
-            "numberOfBytes": "64"
-          },
-          "t_uint256": {
-            "label": "uint256",
-            "numberOfBytes": "32"
-          },
-          "t_uint32": {
-            "label": "uint32",
-            "numberOfBytes": "4"
-          },
-          "t_uint8": {
-            "label": "uint8",
-            "numberOfBytes": "1"
-          }
-        }
-      }
-    },
-    "58281168633c223d0f1443947bb0cc2ad74b661994b82f1cbf33c6c91fb21401": {
-      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-      "txHash": "0x18bf15a836230e3fb09eae30a983eec7f6bfbb9abd8e067c1ec0b1ef65c2aac5",
-      "layout": {
-        "solcVersion": "0.8.17",
-        "storage": [
-          {
-            "label": "_initialized",
-            "offset": 0,
-            "slot": "0",
-            "type": "t_uint8",
-            "contract": "Initializable",
-            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
-            "retypedFrom": "bool"
-          },
-          {
-            "label": "_initializing",
-            "offset": 1,
-            "slot": "0",
-            "type": "t_bool",
-            "contract": "Initializable",
-            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_array(t_uint256)50_storage",
-            "contract": "ContextUpgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "51",
-            "type": "t_array(t_uint256)50_storage",
-            "contract": "ERC165Upgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:41"
-          },
-          {
-            "label": "_roles",
-            "offset": 0,
-            "slot": "101",
-            "type": "t_mapping(t_bytes32,t_struct(RoleData)34_storage)",
-            "contract": "AccessControlUpgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
-          },
-          {
-            "label": "__gap",
-            "offset": 0,
-            "slot": "102",
-            "type": "t_array(t_uint256)49_storage",
-            "contract": "AccessControlUpgradeable",
-            "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:259"
-          },
-          {
-            "label": "PROJECT_ID",
-            "offset": 0,
-            "slot": "151",
-            "type": "t_bytes32",
-            "contract": "Dibs",
-            "src": "contracts/Dibs.sol:12"
-          },
-          {
-            "label": "muonInterface",
-            "offset": 0,
-            "slot": "152",
-            "type": "t_address",
-            "contract": "Dibs",
-            "src": "contracts/Dibs.sol:17"
-          },
-          {
-            "label": "addressToCode",
-            "offset": 0,
-            "slot": "153",
-            "type": "t_mapping(t_address,t_bytes32)",
-            "contract": "Dibs",
-            "src": "contracts/Dibs.sol:20"
-          },
-          {
-            "label": "codeToAddress",
-            "offset": 0,
-            "slot": "154",
-            "type": "t_mapping(t_bytes32,t_address)",
-            "contract": "Dibs",
-            "src": "contracts/Dibs.sol:21"
-          },
-          {
-            "label": "codeToName",
-            "offset": 0,
-            "slot": "155",
-            "type": "t_mapping(t_bytes32,t_string_storage)",
-            "contract": "Dibs",
-            "src": "contracts/Dibs.sol:22"
-          },
-          {
-            "label": "parents",
-            "offset": 0,
-            "slot": "156",
-            "type": "t_mapping(t_address,t_address)",
-            "contract": "Dibs",
-            "src": "contracts/Dibs.sol:23"
-          },
-          {
-            "label": "claimedBalance",
-            "offset": 0,
-            "slot": "157",
-            "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
-            "contract": "Dibs",
-            "src": "contracts/Dibs.sol:25"
-          },
-          {
-            "label": "SCALE",
-            "offset": 0,
-            "slot": "158",
-            "type": "t_uint32",
-            "contract": "Dibs",
-            "src": "contracts/Dibs.sol:28"
-          },
-          {
-            "label": "grandparentPercentage",
-            "offset": 4,
-            "slot": "158",
-            "type": "t_uint32",
-            "contract": "Dibs",
-            "src": "contracts/Dibs.sol:29"
-          },
-          {
-            "label": "dibsPercentage",
-            "offset": 8,
-            "slot": "158",
-            "type": "t_uint32",
-            "contract": "Dibs",
-            "src": "contracts/Dibs.sol:30"
-          },
-          {
-            "label": "dibsLottery",
-            "offset": 12,
-            "slot": "158",
-            "type": "t_address",
-            "contract": "Dibs",
-            "src": "contracts/Dibs.sol:32"
-          },
-          {
-            "label": "wethPriceFeed",
-            "offset": 0,
-            "slot": "159",
-            "type": "t_address",
-            "contract": "Dibs",
-            "src": "contracts/Dibs.sol:33"
-          },
-          {
-            "label": "firstRoundStartTime",
-            "offset": 20,
-            "slot": "159",
-            "type": "t_uint32",
-            "contract": "Dibs",
-            "src": "contracts/Dibs.sol:35"
-          },
-          {
-            "label": "roundDuration",
-            "offset": 24,
-            "slot": "159",
-            "type": "t_uint32",
-            "contract": "Dibs",
-            "src": "contracts/Dibs.sol:36"
-          },
-          {
-            "label": "referrerPercentage",
-            "offset": 28,
-            "slot": "159",
-            "type": "t_uint32",
-            "contract": "Dibs",
-            "src": "contracts/Dibs.sol:38"
-          },
-          {
-            "label": "refereePercentage",
-            "offset": 0,
-            "slot": "160",
-            "type": "t_uint32",
-            "contract": "Dibs",
-            "src": "contracts/Dibs.sol:39"
-          }
-        ],
-        "types": {
-          "t_address": {
-            "label": "address",
-            "numberOfBytes": "20"
-          },
-          "t_array(t_uint256)49_storage": {
-            "label": "uint256[49]",
-            "numberOfBytes": "1568"
-          },
-          "t_array(t_uint256)50_storage": {
-            "label": "uint256[50]",
-            "numberOfBytes": "1600"
-          },
-          "t_bool": {
-            "label": "bool",
-            "numberOfBytes": "1"
-          },
-          "t_bytes32": {
-            "label": "bytes32",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_address)": {
-            "label": "mapping(address => address)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_bool)": {
-            "label": "mapping(address => bool)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_bytes32)": {
-            "label": "mapping(address => bytes32)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
-            "label": "mapping(address => mapping(address => uint256))",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_uint256)": {
-            "label": "mapping(address => uint256)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_bytes32,t_address)": {
-            "label": "mapping(bytes32 => address)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_bytes32,t_string_storage)": {
-            "label": "mapping(bytes32 => string)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_bytes32,t_struct(RoleData)34_storage)": {
-            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
-            "numberOfBytes": "32"
-          },
-          "t_string_storage": {
-            "label": "string",
-            "numberOfBytes": "32"
           },
           "t_struct(RoleData)34_storage": {
             "label": "struct AccessControlUpgradeable.RoleData",
@@ -1646,9 +1472,9 @@
         }
       }
     },
-    "55a4fb6e4cba7bf598dec19c41fd0024959a0d4eceb2ee89020985825f3050fd": {
-      "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-      "txHash": "0x6a57c5c3a4797617bac15c6f031283ba6e830f17df25c2ec65a0bc46efeb6915",
+    "8c7ab236bba3154fbd0e1273097c427e0ccb2ba3b4919bef3b5600e55f898c66": {
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "txHash": "0x2ee6d86beb226d149ab6efd04556c2b8305de3a5f45ef5b83e4dccb4df6fcd6e",
       "layout": {
         "solcVersion": "0.8.17",
         "storage": [
@@ -1702,38 +1528,146 @@
             "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:259"
           },
           {
-            "label": "seedGenerator",
+            "label": "PROJECT_ID",
             "offset": 0,
             "slot": "151",
-            "type": "t_address",
-            "contract": "DibsRepository",
-            "src": "contracts/DibsRepository.sol:35"
+            "type": "t_bytes32",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:12"
           },
           {
-            "label": "projects",
+            "label": "muonInterface",
             "offset": 0,
             "slot": "152",
-            "type": "t_mapping(t_bytes32,t_struct(Project)2016_storage)",
-            "contract": "DibsRepository",
-            "src": "contracts/DibsRepository.sol:37"
+            "type": "t_address",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:17"
           },
           {
-            "label": "allProjects",
+            "label": "addressToCode",
             "offset": 0,
             "slot": "153",
-            "type": "t_array(t_bytes32)dyn_storage",
-            "contract": "DibsRepository",
-            "src": "contracts/DibsRepository.sol:41"
+            "type": "t_mapping(t_address,t_bytes32)",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:20"
+          },
+          {
+            "label": "codeToAddress",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_mapping(t_bytes32,t_address)",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:21"
+          },
+          {
+            "label": "codeToName",
+            "offset": 0,
+            "slot": "155",
+            "type": "t_mapping(t_bytes32,t_string_storage)",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:22"
+          },
+          {
+            "label": "parents",
+            "offset": 0,
+            "slot": "156",
+            "type": "t_mapping(t_address,t_address)",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:23"
+          },
+          {
+            "label": "claimedBalance",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:25"
+          },
+          {
+            "label": "SCALE",
+            "offset": 0,
+            "slot": "158",
+            "type": "t_uint32",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:28"
+          },
+          {
+            "label": "grandparentPercentage",
+            "offset": 4,
+            "slot": "158",
+            "type": "t_uint32",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:29"
+          },
+          {
+            "label": "dibsPercentage",
+            "offset": 8,
+            "slot": "158",
+            "type": "t_uint32",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:30"
+          },
+          {
+            "label": "dibsLottery",
+            "offset": 12,
+            "slot": "158",
+            "type": "t_address",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:32"
+          },
+          {
+            "label": "wethPriceFeed",
+            "offset": 0,
+            "slot": "159",
+            "type": "t_address",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:33"
+          },
+          {
+            "label": "firstRoundStartTime",
+            "offset": 20,
+            "slot": "159",
+            "type": "t_uint32",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:35"
+          },
+          {
+            "label": "roundDuration",
+            "offset": 24,
+            "slot": "159",
+            "type": "t_uint32",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:36"
+          },
+          {
+            "label": "referrerPercentage",
+            "offset": 28,
+            "slot": "159",
+            "type": "t_uint32",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:38"
+          },
+          {
+            "label": "refereePercentage",
+            "offset": 0,
+            "slot": "160",
+            "type": "t_uint32",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:39"
+          },
+          {
+            "label": "blacklisted",
+            "offset": 0,
+            "slot": "161",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "Dibs",
+            "src": "contracts/Dibs.sol:42"
           }
         ],
         "types": {
           "t_address": {
             "label": "address",
             "numberOfBytes": "20"
-          },
-          "t_array(t_bytes32)dyn_storage": {
-            "label": "bytes32[]",
-            "numberOfBytes": "32"
           },
           "t_array(t_uint256)49_storage": {
             "label": "uint256[49]",
@@ -1751,12 +1685,32 @@
             "label": "bytes32",
             "numberOfBytes": "32"
           },
+          "t_mapping(t_address,t_address)": {
+            "label": "mapping(address => address)",
+            "numberOfBytes": "32"
+          },
           "t_mapping(t_address,t_bool)": {
             "label": "mapping(address => bool)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_bytes32,t_struct(Project)2016_storage)": {
-            "label": "mapping(bytes32 => struct Project)",
+          "t_mapping(t_address,t_bytes32)": {
+            "label": "mapping(address => bytes32)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(address => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_address)": {
+            "label": "mapping(bytes32 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_string_storage)": {
+            "label": "mapping(bytes32 => string)",
             "numberOfBytes": "32"
           },
           "t_mapping(t_bytes32,t_struct(RoleData)34_storage)": {
@@ -1766,48 +1720,6 @@
           "t_string_storage": {
             "label": "string",
             "numberOfBytes": "32"
-          },
-          "t_struct(Project)2016_storage": {
-            "label": "struct Project",
-            "members": [
-              {
-                "label": "chainId",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "dibs",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "subgraphEndpoint",
-                "type": "t_string_storage",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "firstRoundStartTime",
-                "type": "t_uint32",
-                "offset": 0,
-                "slot": "3"
-              },
-              {
-                "label": "roundDuration",
-                "type": "t_uint32",
-                "offset": 4,
-                "slot": "3"
-              },
-              {
-                "label": "exists",
-                "type": "t_bool",
-                "offset": 8,
-                "slot": "3"
-              }
-            ],
-            "numberOfBytes": "128"
           },
           "t_struct(RoleData)34_storage": {
             "label": "struct AccessControlUpgradeable.RoleData",

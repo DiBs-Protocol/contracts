@@ -12,11 +12,12 @@ describe("testClaim", async () => {
   let token4: MockContract;
   let admin: SignerWithAddress;
   let setter: SignerWithAddress;
+  let blacklistSetter: SignerWithAddress;
   let muonInterface: SignerWithAddress;
   let user1: SignerWithAddress;
   let user2: SignerWithAddress;
-  let user3: SignerWithAddress;
-  let user4: SignerWithAddress;
+  let blackUser1: SignerWithAddress;
+  let blackUser2: SignerWithAddress;
 
   async function setupMockTokens() {
     token1 = await deployMockContract(admin, ERC20__factory.abi);
@@ -26,8 +27,16 @@ describe("testClaim", async () => {
   }
 
   beforeEach(async () => {
-    [admin, setter, user1, user2, user3, user4, muonInterface] =
-      await ethers.getSigners();
+    [
+      admin,
+      setter,
+      user1,
+      user2,
+      blackUser1,
+      blackUser2,
+      muonInterface,
+      blacklistSetter,
+    ] = await ethers.getSigners();
     const Dibs = await ethers.getContractFactory("Dibs");
     const args = [
       admin.address,
@@ -40,7 +49,9 @@ describe("testClaim", async () => {
 
     dibs = (await upgrades.deployProxy(Dibs, args)) as Dibs;
     await dibs.connect(setter).setMuonInterface(muonInterface.address);
-
+    await dibs
+      .connect(admin)
+      .grantRole(dibs.BLACKLIST_SETTER(), blacklistSetter.address);
     await setupMockTokens();
   });
 
@@ -74,6 +85,72 @@ describe("testClaim", async () => {
     await dibs
       .connect(muonInterface)
       .claim(from, token1.address, amount, to, accumulativeBalance);
+  });
+
+  it("should blacklist a user", async () => {
+    // set up variables
+    const user = blackUser1.address;
+
+    // call the `blacklist` function
+    await dibs.connect(blacklistSetter).setBlacklisted([user], true);
+
+    // check if the user was blacklisted
+    const isBlacklisted = await dibs.blacklisted(user);
+    expect(isBlacklisted).to.be.true;
+  });
+
+  it("should revert if the user is blacklisted", async () => {
+    // set up variables
+    const from = blackUser1.address;
+    const to = user2.address;
+    const amount = ethers.utils.parseEther("10");
+    const accumulativeBalance = ethers.utils.parseEther("20");
+
+    // mock the token contract
+    await token1.mock.transfer.withArgs(to, amount).returns(true);
+
+    await dibs.connect(blacklistSetter).setBlacklisted([from], true);
+
+    // call the `claim` function and expect it to revert with a custom error message
+    await expect(
+      dibs
+        .connect(muonInterface)
+        .claim(from, token1.address, amount, to, accumulativeBalance)
+    ).to.be.revertedWithCustomError(dibs, "Blacklisted");
+  });
+
+  it("should blacklist multiple users", async () => {
+    // set up variables
+    const user1 = blackUser1.address;
+    const user2 = blackUser2.address;
+
+    // call the `blacklist` function
+    await dibs.connect(blacklistSetter).setBlacklisted([user1, user2], true);
+
+    // check if the users were blacklisted
+    const isBlacklisted1 = await dibs.blacklisted(user1);
+    const isBlacklisted2 = await dibs.blacklisted(user2);
+    expect(isBlacklisted1).to.be.true;
+    expect(isBlacklisted2).to.be.true;
+  });
+
+  it("should be able to unset a user from the blacklist", async () => {
+    // set up variables
+    const user = blackUser1.address;
+
+    // call the `blacklist` function
+    await dibs.connect(blacklistSetter).setBlacklisted([user], true);
+
+    // check if the user was blacklisted
+    const isBlacklisted = await dibs.blacklisted(user);
+    expect(isBlacklisted).to.be.true;
+
+    // unset the user from the blacklist
+    await dibs.connect(blacklistSetter).setBlacklisted([user], false);
+
+    // check if the user was unset from the blacklist
+    const isBlacklistedAfter = await dibs.blacklisted(user);
+    expect(isBlacklistedAfter).to.be.false;
   });
 
   it("should revert if the claimed balance is too low", async () => {

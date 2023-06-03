@@ -38,6 +38,9 @@ contract Dibs is AccessControlUpgradeable {
     uint32 public referrerPercentage;
     uint32 public refereePercentage;
 
+    bytes32 public constant BLACKLIST_SETTER = keccak256("BLACKLIST_SETTER");
+    mapping(address => bool) public blacklisted;
+
     // * these values are in SCALE units (1e6) and should be divided by SCALE to get the actual percentage
     // the sum of these values should be 1e6
 
@@ -46,6 +49,7 @@ contract Dibs is AccessControlUpgradeable {
     error ZeroValue();
     error BalanceTooLow();
     error NotMuonInterface();
+    error Blacklisted();
 
     // initializer
     function initialize(
@@ -192,6 +196,23 @@ contract Dibs is AccessControlUpgradeable {
 
     /** =========== RESTRICTED FUNCTIONS =========== */
 
+    // set/unset list of blacklisted addresses
+    event SetBlacklisted(address[] _addresses, bool _isBlacklisted);
+
+    /// @notice set/unset list of blacklisted addresses
+    /// @param _addresses : list of addresses to set/unset
+    /// @param _isBlacklisted : true to set, false to unset
+    function setBlacklisted(
+        address[] calldata _addresses,
+        bool _isBlacklisted
+    ) external onlyRole(BLACKLIST_SETTER) {
+        for (uint256 i = 0; i < _addresses.length; i++) {
+            blacklisted[_addresses[i]] = _isBlacklisted;
+        }
+
+        emit SetBlacklisted(_addresses, _isBlacklisted);
+    }
+
     // set muonInterface address
     event SetMuonInterface(address _old, address _new);
 
@@ -273,7 +294,7 @@ contract Dibs is AccessControlUpgradeable {
         uint256 amount,
         address to,
         uint256 accumulativeBalance
-    ) internal {
+    ) internal notBlacklisted(from) {
         uint256 remainingBalance = accumulativeBalance -
             claimedBalance[token][from];
 
@@ -293,6 +314,11 @@ contract Dibs is AccessControlUpgradeable {
 
     modifier onlyMuonInterface() {
         if (msg.sender != muonInterface) revert NotMuonInterface();
+        _;
+    }
+
+    modifier notBlacklisted(address user) {
+        if (blacklisted[user]) revert Blacklisted();
         _;
     }
 }
