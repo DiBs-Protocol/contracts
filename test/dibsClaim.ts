@@ -16,8 +16,9 @@ describe("testClaim", async () => {
   let muonInterface: SignerWithAddress;
   let user1: SignerWithAddress;
   let user2: SignerWithAddress;
-  let blackUser1: SignerWithAddress;
-  let blackUser2: SignerWithAddress;
+  let blockUser1: SignerWithAddress;
+  let blockUser2: SignerWithAddress;
+  let platform: SignerWithAddress;
 
   async function setupMockTokens() {
     token1 = await deployMockContract(admin, ERC20__factory.abi);
@@ -32,10 +33,11 @@ describe("testClaim", async () => {
       setter,
       user1,
       user2,
-      blackUser1,
-      blackUser2,
+      blockUser1,
+      blockUser2,
       muonInterface,
       blacklistSetter,
+      platform,
     ] = await ethers.getSigners();
     const Dibs = await ethers.getContractFactory("Dibs");
     const args = [
@@ -89,7 +91,7 @@ describe("testClaim", async () => {
 
   it("should blacklist a user", async () => {
     // set up variables
-    const user = blackUser1.address;
+    const user = blockUser1.address;
 
     // call the `blacklist` function
     await dibs.connect(blacklistSetter).setBlacklisted([user], true);
@@ -101,7 +103,7 @@ describe("testClaim", async () => {
 
   it("should revert if the user is blacklisted", async () => {
     // set up variables
-    const from = blackUser1.address;
+    const from = blockUser1.address;
     const to = user2.address;
     const amount = ethers.utils.parseEther("10");
     const accumulativeBalance = ethers.utils.parseEther("20");
@@ -121,8 +123,8 @@ describe("testClaim", async () => {
 
   it("should blacklist multiple users", async () => {
     // set up variables
-    const user1 = blackUser1.address;
-    const user2 = blackUser2.address;
+    const user1 = blockUser1.address;
+    const user2 = blockUser2.address;
 
     // call the `blacklist` function
     await dibs.connect(blacklistSetter).setBlacklisted([user1, user2], true);
@@ -136,7 +138,7 @@ describe("testClaim", async () => {
 
   it("should be able to unset a user from the blacklist", async () => {
     // set up variables
-    const user = blackUser1.address;
+    const user = blockUser1.address;
 
     // call the `blacklist` function
     await dibs.connect(blacklistSetter).setBlacklisted([user], true);
@@ -320,5 +322,91 @@ describe("testClaim", async () => {
     expect(await dibs.claimedBalance(token1.address, from)).to.be.equal(
       amount.mul(3)
     );
+  });
+
+  it("should not be able to claim excess tokens if not muon interface", async () => {
+    await token1.mock.transfer.withArgs(platform.address, 1000).returns(true);
+
+    await expect(
+      dibs
+        .connect(admin)
+        .claimExcessTokens(
+          token1.address,
+          platform.address,
+          ethers.utils.parseEther("1"),
+          1000
+        )
+    ).to.be.revertedWithCustomError(dibs, "NotMuonInterface");
+  });
+
+  it("should allow muon interface to claim excess tokens", async () => {
+    await token1.mock.transfer.withArgs(platform.address, 1000).returns(true);
+
+    const accPlatformBalance = ethers.utils.parseEther("1");
+
+    await dibs
+      .connect(muonInterface)
+      .claimExcessTokens(
+        token1.address,
+        platform.address,
+        accPlatformBalance,
+        1000
+      );
+  });
+
+  it("should not be able to claim more than excess tokens", async () => {
+    const accPlatformBalance = ethers.utils.parseEther("1");
+    await token1.mock.transfer
+      .withArgs(platform.address, accPlatformBalance.add(1))
+      .returns(true);
+
+    await expect(
+      dibs
+        .connect(muonInterface)
+        .claimExcessTokens(
+          token1.address,
+          platform.address,
+          accPlatformBalance,
+          accPlatformBalance.add(1)
+        )
+    ).to.be.revertedWithCustomError(dibs, "BalanceTooLow");
+  });
+
+  it("should not be able to claim more than excess tokens on multiple calls", async () => {
+    const accPlatformBalance = ethers.utils.parseEther("1");
+    const withdrawAmount = ethers.utils.parseEther("0.5");
+
+    await token1.mock.transfer
+      .withArgs(platform.address, withdrawAmount)
+      .returns(true);
+
+    await dibs
+      .connect(muonInterface)
+      .claimExcessTokens(
+        token1.address,
+        platform.address,
+        accPlatformBalance,
+        withdrawAmount
+      );
+
+    await dibs
+      .connect(muonInterface)
+      .claimExcessTokens(
+        token1.address,
+        platform.address,
+        accPlatformBalance,
+        withdrawAmount
+      );
+
+    await expect(
+      dibs
+        .connect(muonInterface)
+        .claimExcessTokens(
+          token1.address,
+          platform.address,
+          accPlatformBalance,
+          1
+        )
+    ).to.be.revertedWithCustomError(dibs, "BalanceTooLow");
   });
 });

@@ -41,6 +41,8 @@ contract Dibs is AccessControlUpgradeable {
     bytes32 public constant BLACKLIST_SETTER = keccak256("BLACKLIST_SETTER");
     mapping(address => bool) public blacklisted;
 
+    mapping(address => uint256) public excessClaimedBalance; // token => claimed balance
+
     // * these values are in SCALE units (1e6) and should be divided by SCALE to get the actual percentage
     // the sum of these values should be 1e6
 
@@ -195,6 +197,36 @@ contract Dibs is AccessControlUpgradeable {
     }
 
     /** =========== RESTRICTED FUNCTIONS =========== */
+
+    event ClaimedExcessTokens(address _token, address _to, uint256 _amount);
+
+    /// @notice withdraw excess tokens from this contract
+    /// @dev this function is called by the muon interface,
+    /// muon interface should validate the accumulative balance
+    /// @param token address of the token
+    /// @param to address to send the tokens to
+    /// @param accumulativeBalance accumulated balance of the platform
+    /// @param amount amount of tokens to withdraw
+    function claimExcessTokens(
+        address token,
+        address to,
+        uint256 accumulativeBalance,
+        uint256 amount
+    ) external onlyMuonInterface {
+        uint256 remainingBalance = accumulativeBalance -
+            excessClaimedBalance[token];
+
+        // revert if balance is too low
+        if (remainingBalance < amount) {
+            revert BalanceTooLow();
+        }
+
+        // update claimed balance
+        excessClaimedBalance[token] += amount;
+
+        IERC20Upgradeable(token).safeTransfer(to, amount);
+        emit ClaimedExcessTokens(token, to, amount);
+    }
 
     // set/unset list of blacklisted addresses
     event SetBlacklisted(address[] _addresses, bool _isBlacklisted);
