@@ -22,6 +22,8 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
     address public dibs;
     address public validGateway;
 
+    bytes32 public constant PLATFORM = keccak256("PLATFORM");
+
     // ======== CONSTRUCTOR ========
 
     function initialize(
@@ -168,6 +170,43 @@ contract MuonInterfaceV1 is MuonClient, AccessControlUpgradeable {
             topReferrers
         );
         emit TopReferrersSet(day, topReferrers);
+    }
+
+    event ClaimedExcessTokens(
+        address indexed token,
+        address indexed to,
+        uint256 amount
+    );
+
+    /// @notice withdraws excess tokens from Dibs contract on behalf of a user
+    /// @param token token address
+    /// @param to address to send the tokens to
+    /// @param accumulativeBalance accumulative balance of the platform
+    /// @param amount amount of tokens to withdraw
+    /// @param sigTimestamp signature timestamp
+    /// @param reqId request id that the signature was obtained from
+    /// @param sign signature of the data
+    /// @param gatewaySignature signature of the data by the gateway (specific Muon node)
+    function claimExcessTokens(
+        address token,
+        address to,
+        uint256 accumulativeBalance,
+        uint256 amount,
+        uint256 sigTimestamp,
+        bytes calldata reqId,
+        SchnorrSign calldata sign,
+        bytes calldata gatewaySignature
+    ) external onlyRole(PLATFORM) {
+        bytes memory data = abi.encodePacked(
+            PROJECT_ID,
+            "PLATFORM",
+            token,
+            accumulativeBalance,
+            sigTimestamp
+        );
+        verifyTSSAndGW(data, reqId, sign, gatewaySignature);
+        IDibs(dibs).claimExcessTokens(token, to, accumulativeBalance, amount);
+        emit ClaimedExcessTokens(token, to, amount);
     }
 
     // ======== RESTRICTED FUNCTIONS ========

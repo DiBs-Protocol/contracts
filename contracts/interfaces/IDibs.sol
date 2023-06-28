@@ -22,4 +22,11 @@ interface IDibs {
     function roundDuration() external view returns (uint32);
 
     function blacklisted(address) external view returns (bool);
+
+    function claimExcessTokens(
+        address token,
+        address to,
+        uint256 accumulativeBalance,
+        uint256 amount
+    ) external;
 }
