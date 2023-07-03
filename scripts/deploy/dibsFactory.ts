@@ -2,7 +2,7 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { assert } from "chai";
 import { BigNumber } from "ethers";
 import hre, { ethers, upgrades } from "hardhat";
-import { Dibs, DibsLottery, MuonInterfaceV1 } from "../typechain-types";
+import { Dibs, DibsLottery, MuonInterfaceV1 } from "../../typechain-types";
 
 async function deployDibsLottery(
   admin: string,
