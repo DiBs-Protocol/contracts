@@ -4,7 +4,7 @@
 
 Here is a list of parameters to decide on when integrating DiBs:
 
-- `firstRoundStartTime: number`: Unix timestamp indicating when the first round of the will start. For example: `1687996800`.
+- `firstRoundStartTime: number`: Unix timestamp indicating when the first round will start. For example: `1687996800`.
 
 - `roundDuration: number`: Duration of each round in seconds. For example: `604800` (equivalent to one week).
 
