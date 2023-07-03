@@ -1417,7 +1417,7 @@
             "label": "muonPublicKey",
             "offset": 0,
             "slot": "2",
-            "type": "t_struct(PublicKey)2664_storage",
+            "type": "t_struct(PublicKey)4553_storage",
             "contract": "MuonClientBase",
             "src": "contracts/MuonClientBase.sol:22"
           },
@@ -1507,7 +1507,7 @@
             "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
             "numberOfBytes": "32"
           },
-          "t_struct(PublicKey)2664_storage": {
+          "t_struct(PublicKey)4553_storage": {
             "label": "struct MuonClientBase.PublicKey",
             "members": [
               {
@@ -2430,6 +2430,178 @@
           "t_uint32": {
             "label": "uint32",
             "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "5faa2bf557153772b9fc77d4ee44ed18f7b50218a4e4d005650f1c9968cafe0a": {
+      "address": "0x391e36C184e1c914636b1D512bd76593ADFFC9a4",
+      "txHash": "0x270404143ef7f27303af5fd464633054083e77e93062a5d921603f172b74df17",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "muonAppId",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256",
+            "contract": "MuonClientBase",
+            "src": "contracts/MuonClientBase.sol:21"
+          },
+          {
+            "label": "muonPublicKey",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_struct(PublicKey)5512_storage",
+            "contract": "MuonClientBase",
+            "src": "contracts/MuonClientBase.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "_roles",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)34_storage)",
+            "contract": "AccessControlUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "AccessControlUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:259"
+          },
+          {
+            "label": "PROJECT_ID",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_bytes32",
+            "contract": "MuonInterfaceV1",
+            "src": "contracts/MuonInterface.sol:20"
+          },
+          {
+            "label": "dibs",
+            "offset": 0,
+            "slot": "155",
+            "type": "t_address",
+            "contract": "MuonInterfaceV1",
+            "src": "contracts/MuonInterface.sol:22"
+          },
+          {
+            "label": "validGateway",
+            "offset": 0,
+            "slot": "156",
+            "type": "t_address",
+            "contract": "MuonInterfaceV1",
+            "src": "contracts/MuonInterface.sol:23"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)34_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(PublicKey)5512_storage": {
+            "label": "struct MuonClientBase.PublicKey",
+            "members": [
+              {
+                "label": "x",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "parity",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(RoleData)34_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
           },
           "t_uint8": {
             "label": "uint8",
