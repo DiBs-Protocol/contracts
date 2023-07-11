@@ -3,6 +3,7 @@ import { assert } from "chai";
 import { BigNumber } from "ethers";
 import hre, { ethers, upgrades } from "hardhat";
 import { Dibs, DibsLottery, MuonInterfaceV1 } from "../../typechain-types";
+import { deployMuonInterface } from "./deployMuonInterface";
 
 async function deployDibsLottery(
   admin: string,
@@ -194,6 +195,11 @@ export async function dibsFactory(
 
   await adjustRoles(dibs, dibsLottery, deployer, admin, setter);
 
+  const muonInterface = await deployMuonInterface(dibs.address);
+
+  await dibs.setMuonInterface(muonInterface.address);
+  console.log("muonInterface set in dibs");
+
   // verify implementations
   const dibsImplementation = await upgrades.erc1967.getImplementationAddress(
     dibs.address
@@ -202,15 +208,17 @@ export async function dibsFactory(
   const dibsLotteryImplementation =
     await upgrades.erc1967.getImplementationAddress(dibsLottery.address);
 
-  await hre.run("verify:verify", {
-    address: dibsImplementation,
-    constructorArguments: [],
-  });
+  if (hre.network.name != "hardhat") {
+    await hre.run("verify:verify", {
+      address: dibsImplementation,
+      constructorArguments: [],
+    });
 
-  await hre.run("verify:verify", {
-    address: dibsLotteryImplementation,
-    constructorArguments: [],
-  });
+    await hre.run("verify:verify", {
+      address: dibsLotteryImplementation,
+      constructorArguments: [],
+    });
+  }
 
   return { dibs, dibsLottery };
 }
