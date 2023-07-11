@@ -40,14 +40,15 @@ export async function deployMuonInterface(
   console.log("Implementation deployed to:", implementationAddress);
 
   // verify muon interface
-  try {
-    await hre.run("verify:verify", {
-      address: implementationAddress,
-      constructorArguments: [],
-    });
-  } catch (e) {
-    console.log(e);
+  if (hre.network.name != "hardhat") {
+    try {
+      await hre.run("verify:verify", {
+        address: implementationAddress,
+        constructorArguments: [],
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
-
   return muonInterface as MuonInterfaceV1;
 }

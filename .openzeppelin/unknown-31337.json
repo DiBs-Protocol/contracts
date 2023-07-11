@@ -2,7 +2,7 @@
   "manifestVersion": "3.2",
   "admin": {
     "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-    "txHash": "0x303df5ddf52483eaf588fc3626238126f25565c03e4ed53597fbc9cd09880ea6"
+    "txHash": "0x925f4dd46a9a0816158027b140168fe4aec9f14168da891dc7e9925f054fd5e4"
   },
   "proxies": [
     {
@@ -481,11 +481,6 @@
       "kind": "transparent"
     },
     {
-      "address": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
-      "txHash": "0xc6f75a2a01caff59cba9b7132d8e6e598d4da28480d87e12024da686879ac253",
-      "kind": "transparent"
-    },
-    {
       "address": "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
       "txHash": "0x97e09cc4ac8c982bfe93eea6b650a737573fa99fdbaf874b742af5809e8e326a",
       "kind": "transparent"
@@ -786,11 +781,6 @@
       "kind": "transparent"
     },
     {
-      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
-      "txHash": "0x8071b4bac9a09a5c0b2d2f59f091408b17ec6ca3090fc2295ff14cf35b384515",
-      "kind": "transparent"
-    },
-    {
       "address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
       "txHash": "0x3b749b1f221628e1469fd3113d24bb45996ad59e4269427e891769fea58163a4",
       "kind": "transparent"
@@ -868,6 +858,21 @@
     {
       "address": "0x525C7063E7C20997BaaE9bDa922159152D0e8417",
       "txHash": "0xabe782b7e3cb89860eafe5f5197bf3fe0f4092cae830a7bf23effe4f272c39c0",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "txHash": "0xadf82ddded1ece24693be0d107d1414edb89c5ac1fd3bac57eca3a674557f606",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+      "txHash": "0x9129e95b4cfbb74c05e576e2f89a45b1a72ae91c1922fbee87dbe8ce91c11177",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+      "txHash": "0xfb45308578a3a84dc18e8ada971b672dcdc176d6b107a59cb30c71666845ece6",
       "kind": "transparent"
     }
   ],
@@ -1351,8 +1356,8 @@
       }
     },
     "1b36b25e0ec832d7ef022362269b3240559f82f17c829cba1b4882a9b07dc921": {
-      "address": "0xA7c59f010700930003b33aB25a7a0679C860f29c",
-      "txHash": "0x6fd3026632dae45926777b34c16e688278f6412462b8258c5f1dfbc5a5177a59",
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "txHash": "0x763057e15d79df3c7ab870d98e1fa62f811a6c73599682049494e09d7158d2f3",
       "layout": {
         "solcVersion": "0.8.17",
         "storage": [
@@ -1489,7 +1494,7 @@
             "label": "leaderBoards",
             "offset": 0,
             "slot": "160",
-            "type": "t_array(t_struct(LeaderBoard)2413_storage)dyn_storage",
+            "type": "t_array(t_struct(LeaderBoard)3967_storage)dyn_storage",
             "contract": "DibsLottery",
             "src": "contracts/DibsLottery.sol:40"
           },
@@ -1531,7 +1536,7 @@
             "label": "uint256[][]",
             "numberOfBytes": "32"
           },
-          "t_array(t_struct(LeaderBoard)2413_storage)dyn_storage": {
+          "t_array(t_struct(LeaderBoard)3967_storage)dyn_storage": {
             "label": "struct LeaderBoard[]",
             "numberOfBytes": "32"
           },
@@ -1599,7 +1604,7 @@
             "label": "mapping(uint32 => uint256)",
             "numberOfBytes": "32"
           },
-          "t_struct(LeaderBoard)2413_storage": {
+          "t_struct(LeaderBoard)3967_storage": {
             "label": "struct LeaderBoard",
             "members": [
               {
@@ -2149,8 +2154,8 @@
       }
     },
     "339b697f10bda03293856353795e0ecf6f25f6957dd9c2c22c36c96e8adf78e7": {
-      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-      "txHash": "0x19cbce11a4b8c241b5bbc1ffcd16ba4d1c2dc7298e811ae7da6e514b09429173",
+      "address": "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+      "txHash": "0x17ebc0eccb50af1660a172c81830d37bbbe14b60dcbacb316f8916c40c6c56bd",
       "layout": {
         "solcVersion": "0.8.17",
         "storage": [
@@ -2430,6 +2435,178 @@
           "t_uint32": {
             "label": "uint32",
             "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "5faa2bf557153772b9fc77d4ee44ed18f7b50218a4e4d005650f1c9968cafe0a": {
+      "address": "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
+      "txHash": "0x0cbb2e57d59cf33fe89a6127353c5db6b9671201d75db414b7f25567cf79bd72",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "muonAppId",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256",
+            "contract": "MuonClientBase",
+            "src": "contracts/MuonClientBase.sol:21"
+          },
+          {
+            "label": "muonPublicKey",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_struct(PublicKey)2664_storage",
+            "contract": "MuonClientBase",
+            "src": "contracts/MuonClientBase.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "_roles",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)34_storage)",
+            "contract": "AccessControlUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "AccessControlUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:259"
+          },
+          {
+            "label": "PROJECT_ID",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_bytes32",
+            "contract": "MuonInterfaceV1",
+            "src": "contracts/MuonInterface.sol:20"
+          },
+          {
+            "label": "dibs",
+            "offset": 0,
+            "slot": "155",
+            "type": "t_address",
+            "contract": "MuonInterfaceV1",
+            "src": "contracts/MuonInterface.sol:22"
+          },
+          {
+            "label": "validGateway",
+            "offset": 0,
+            "slot": "156",
+            "type": "t_address",
+            "contract": "MuonInterfaceV1",
+            "src": "contracts/MuonInterface.sol:23"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)34_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(PublicKey)2664_storage": {
+            "label": "struct MuonClientBase.PublicKey",
+            "members": [
+              {
+                "label": "x",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "parity",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(RoleData)34_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
           },
           "t_uint8": {
             "label": "uint8",
