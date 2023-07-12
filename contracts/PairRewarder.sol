@@ -7,29 +7,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeab
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 
 import "./interfaces/IDibs.sol";
-
-interface IPairRewarder {
-    struct LeaderBoardInfo {
-        uint256 winnersCount;
-        address[] rewardTokens;
-        uint256[][] rewardAmounts;
-    }
-
-    struct LeaderBoardWinners {
-        LeaderBoardInfo info;
-        address[] winners;
-    }
-
-    function leaderBoardInfo() external view returns (LeaderBoardInfo memory);
-
-    function leaderBoardWinners(
-        uint256 day
-    ) external view returns (LeaderBoardWinners memory);
-
-    function getUserLeaderBoardWins(
-        address user
-    ) external view returns (uint256[] memory);
-}
+import "./interfaces/IPairRewarder.sol";
 
 contract PairRewarder is IPairRewarder, AccessControlUpgradeable {
     using SafeERC20Upgradeable for IERC20Upgradeable;
@@ -45,20 +23,6 @@ contract PairRewarder is IPairRewarder, AccessControlUpgradeable {
         public userLeaderBoardClaimedForDay; // user => day => claimed
 
     bytes32 public constant SETTER_ROLE = keccak256("SETTER_ROLE");
-
-    event LeaderBoardSet(
-        uint256 winnersCount,
-        address[] rewardTokens,
-        uint256[][] rewardAmounts
-    );
-
-    error InvalidInput();
-    error OnlyMuonInterface();
-    error DayNotOver();
-    error TooManyWinners();
-    error AlreadySet();
-    error NotWinner();
-    error AlreadyClaimed();
 
     function initialize(
         address dibs_,
@@ -129,6 +93,8 @@ contract PairRewarder is IPairRewarder, AccessControlUpgradeable {
                 break;
             }
         }
+
+        emit ClaimedLeaderBoardReward(msg.sender, day, to);
     }
 
     function setTopReferrers(
@@ -154,6 +120,8 @@ contract PairRewarder is IPairRewarder, AccessControlUpgradeable {
             userLeaderBoardWins[winners[i]].push(day);
             userLeaderBoardWonOnDay[winners[i]][day] = true;
         }
+
+        emit TopReferrersSet(day, winners);
     }
 
     function setLeaderBoard(
