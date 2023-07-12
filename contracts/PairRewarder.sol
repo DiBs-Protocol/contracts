@@ -26,20 +26,23 @@ interface IPairRewarder {
         uint256 day
     ) external view returns (LeaderBoardWinners memory);
 
-    function userLeaderBoardWins(
+    function getUserLeaderBoardWins(
         address user
     ) external view returns (uint256[] memory);
 }
 
 contract PairRewarder is IPairRewarder, AccessControlUpgradeable {
+    using SafeERC20Upgradeable for IERC20Upgradeable;
+
     address public dibs;
     address public pair;
 
     LeaderBoardInfo _leaderBoardInfo;
     mapping(uint256 => LeaderBoardWinners) _leaderBoardWinners; // day => winners
-    mapping(address => uint256[]) _userLeaderBoardWins; // user => days
-
-    mapping(address => uint256) public userLastLeaderBoardClaim; // user => day
+    mapping(address => uint256[]) public userLeaderBoardWins; // user => days
+    mapping(address => mapping(uint256 => bool)) public userLeaderBoardWonOnDay; // user => day => won
+    mapping(address => mapping(uint256 => bool))
+        public userLeaderBoardClaimedForDay; // user => day => claimed
 
     bytes32 public constant SETTER_ROLE = keccak256("SETTER_ROLE");
 
@@ -54,6 +57,8 @@ contract PairRewarder is IPairRewarder, AccessControlUpgradeable {
     error DayNotOver();
     error TooManyWinners();
     error AlreadySet();
+    error NotWinner();
+    error AlreadyClaimed();
 
     function initialize(
         address dibs_,
@@ -85,10 +90,10 @@ contract PairRewarder is IPairRewarder, AccessControlUpgradeable {
         return _leaderBoardWinners[day_];
     }
 
-    function userLeaderBoardWins(
+    function getUserLeaderBoardWins(
         address user_
     ) external view override returns (uint256[] memory) {
-        return _userLeaderBoardWins[user_];
+        return userLeaderBoardWins[user_];
     }
 
     function activeDay() public view returns (uint256) {
@@ -98,10 +103,38 @@ contract PairRewarder is IPairRewarder, AccessControlUpgradeable {
             );
     }
 
+    function claimLeaderBoardReward(uint256 day, address to) external {
+        if (!userLeaderBoardWonOnDay[msg.sender][day]) {
+            revert NotWinner();
+        }
+
+        if (userLeaderBoardClaimedForDay[msg.sender][day]) {
+            revert AlreadyClaimed();
+        }
+
+        userLeaderBoardClaimedForDay[msg.sender][day] = true;
+
+        LeaderBoardWinners memory winnersInfo = _leaderBoardWinners[day];
+
+        for (uint256 i = 0; i < winnersInfo.winners.length; i++) {
+            if (winnersInfo.winners[i] == msg.sender) {
+                for (
+                    uint256 j = 0;
+                    j < winnersInfo.info.rewardTokens.length;
+                    j++
+                ) {
+                    IERC20Upgradeable(winnersInfo.info.rewardTokens[j])
+                        .safeTransfer(to, winnersInfo.info.rewardAmounts[j][i]);
+                }
+                break;
+            }
+        }
+    }
+
     function setTopReferrers(
         uint256 day,
         address[] memory winners
-    ) public onlyMuonInterface {
+    ) external onlyMuonInterface {
         if (day >= activeDay()) {
             revert DayNotOver();
         }
@@ -118,7 +151,8 @@ contract PairRewarder is IPairRewarder, AccessControlUpgradeable {
         _leaderBoardWinners[day].info = _leaderBoardInfo;
 
         for (uint256 i = 0; i < winners.length; i++) {
-            _userLeaderBoardWins[winners[i]].push(day);
+            userLeaderBoardWins[winners[i]].push(day);
+            userLeaderBoardWonOnDay[winners[i]][day] = true;
         }
     }
 
@@ -126,7 +160,7 @@ contract PairRewarder is IPairRewarder, AccessControlUpgradeable {
         uint256 winnersCount_,
         address[] memory rewardTokens_,
         uint256[][] memory rewardAmounts_
-    ) public onlyRole(SETTER_ROLE) {
+    ) external onlyRole(SETTER_ROLE) {
         if (rewardTokens_.length != rewardAmounts_.length) {
             revert InvalidInput();
         }
