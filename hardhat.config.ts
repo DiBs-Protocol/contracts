@@ -13,7 +13,10 @@ const config: HardhatUserConfig = {
   networks: {
     goerli: {
       url: "https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
-      accounts: [process.env.ADMIN_PRIVATE_KEY!],
+      accounts: [
+        process.env.ADMIN_PRIVATE_KEY!,
+        process.env.TESTER_PRIVATE_KEY!,
+      ],
       gasPrice: 60000000000,
     },
     bsc: {
@@ -36,6 +39,7 @@ const config: HardhatUserConfig = {
   etherscan: {
     apiKey: {
       mainnet: process.env.ETHERSCAN_API_KEY!,
+      goerli: process.env.ETHERSCAN_API_KEY!,
       polygonMumbai: process.env.MATICSCAN_API_KEY!,
       polygon: process.env.MATICSCAN_API_KEY!,
       bsc: process.env.BSCSCAN_API_KEY!,
